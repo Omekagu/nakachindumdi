@@ -1,0 +1,171 @@
+// Cookie Popup Styles - Desktop & Mobile
+
+.cookies-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #000;
+  padding: 2.5rem;
+  z-index: 10009;
+  max-width: 650px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.4s ease-in-out;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: #000;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #333;
+
+    a {
+      color: #000;
+      text-decoration: underline;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .cookies-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  button {
+    flex: 1;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: inherit;
+    letter-spacing: 0.5px;
+  }
+
+  .accept-btn {
+    background: #000;
+    color: #fff;
+
+    &:hover {
+      background: #333;
+    }
+  }
+
+  .settings-btn {
+    background: transparent;
+    border: 2px solid #000 !important;
+    color: #000;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+}
+
+// Overlay for desktop centered popup
+.cookie-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: oklab(77.08500000000001% 0.00543 0.0016 / 0.5);
+  z-index: 19998;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .cookies-popup {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    transform: none;
+    max-width: 100%;
+    width: 100%;
+    padding: 1.5rem;
+    //border-radius: 0;
+    animation: slideUp 0.4s ease-in-out;
+    position: fixed;
+    bottom: 0;
+    margin: 11px;
+    left: -10px;
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .cookies-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.875rem 1rem;
+    }
+
+    // Mobile has a "Continue without Accepting" link at top
+    .continue-link {
+      display: block;
+      text-align: right;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      text-decoration: underline;
+      color: #666;
+      cursor: pointer;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  // Hide overlay on mobile (bottom sheet style)
+  .cookie-overlay {
+    display: block;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
