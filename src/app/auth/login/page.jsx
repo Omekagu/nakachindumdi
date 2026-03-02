@@ -619,7 +619,7 @@ export default function AuthPage () {
           margin-top: 8px;
           margin-bottom: 8px;
           font-weight: 600;
-          font-size: 0.6rem;
+          font-size: 0.8rem;
           text-align: center;
         }
 
@@ -628,7 +628,7 @@ export default function AuthPage () {
           margin-top: 8px;
           margin-bottom: 8px;
           font-weight: 600;
-          font-size: 0.6rem;
+          font-size: 0.8rem;
           text-align: center;
         }
 
@@ -647,7 +647,7 @@ export default function AuthPage () {
           margin-top: 24px;
           color: #6366f1;
           font-weight: 600;
-          font-size: 0.6rem;
+          font-size: 0.8rem;
         }
 
         .separator {
@@ -685,17 +685,17 @@ export default function AuthPage () {
           }
 
           .signin-subtitle {
-            font-size: 0.6rem;
+            font-size: 0.8rem;
           }
 
           .input {
             padding: 12px 14px;
-            font-size: 0.6rem;
+            font-size: 0.8rem;
           }
 
           .btn {
             padding: 11px 16px;
-            font-size: 0.6rem;
+            font-size: 0.8rem;
           }
 
           .button-group {

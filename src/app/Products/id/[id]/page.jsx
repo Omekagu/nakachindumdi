@@ -4,10 +4,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNotification } from '@/app/context/NotificationContext'
 import SkeletonProductCard from '@/components/SkeletonProductCard'
 import AddedToCartPreview from '@/components/products/AddedToCartPreview'
-import Markdown from 'react-markdown'
 
 export default function ProductDetailsPage () {
   const { id } = useParams()

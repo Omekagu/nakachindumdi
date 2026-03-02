@@ -224,7 +224,7 @@ body {
     }
 
     @media (max-width: 480px) {
-      font-size: 0.6rem;
+      font-size: 0.8rem;
     }
 
     thead {
@@ -243,7 +243,7 @@ body {
         padding: 0.75rem 0.5rem;
         color: var(--text-secondary);
         font-weight: 700;
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         text-transform: inherit;
         letter-spacing: 0.04em;
         white-space: nowrap;
@@ -338,7 +338,7 @@ body {
               flex-direction: column;
               gap: 0.2rem;
               min-width: 0;
-              font-size: 0.6rem;
+              font-size: 0.8rem;
 
               strong {
                 color: var(--text-primary);
