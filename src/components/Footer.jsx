@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import FooterModal from './user/FooterModal'
 
 function FooterSection ({
@@ -67,11 +67,16 @@ function FooterSection ({
 
 export default function Footer () {
   const router = useRouter()
+  const pathname = usePathname()
   const [modalOpen, setModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState(null)
   const [selectedLanguage, setSelectedLanguage] = useState('English')
   const [selectedCountry, setSelectedCountry] = useState('United States')
   const [activeSection, setActiveSection] = useState(null)
+
+  useEffect(() => {
+    setActiveSection(null)
+  }, [pathname])
 
   // Load Google Translate
   useEffect(() => {

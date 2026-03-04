@@ -869,7 +869,7 @@ export default function ProductDetailsPage () {
                   style={{
                     whiteSpace: 'pre-wrap',
                     lineHeight: '1.8',
-                    fontSize: '11px'
+                    fontSize: '0.7rem'
                   }}
                 >
                   {product.description}
@@ -883,7 +883,7 @@ export default function ProductDetailsPage () {
                 <span style={{ marginTop: '15px' }}>Details</span>
                 <p
                   style={{
-                    fontSize: '14px',
+                    fontSize: '0.7rem',
                     whiteSpace: 'pre-wrap',
                     lineHeight: '1.8',
                     marginBottom: '15px'

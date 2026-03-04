@@ -47,7 +47,7 @@ a {
   background: rgba(0, 0, 0, 0.5);
   border: none;
   color: white;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   padding: 0.5rem 0.8rem;
   cursor: pointer;
   //border-radius: 50%;
@@ -114,7 +114,7 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     margin-top: -1rem;
     text-transform: capitalize;
     cursor: pointer;
@@ -136,22 +136,24 @@ a {
   //   border: 1px solid #333;
   //   padding: -1rem 0 -1rem 0.5rem;
   // }
-
   .accordion-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin-top: -1rem;
     text-transform: capitalize;
     cursor: pointer;
   }
   .accordion-content {
     padding-bottom: 1rem;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     color: #ccc;
     line-height: 1.6;
+  }
+  span {
+    font-size: 0.7rem;
   }
 }
 
@@ -161,7 +163,7 @@ a {
   padding: 4px 8px;
   width: 100%;
   padding: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   height: 50px;
 }
 
@@ -222,7 +224,7 @@ a {
   margin-top: 2rem;
   margin-top: -0.01rem;
   padding: 1rem 0;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   text-transform: capitalize;
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -239,7 +241,7 @@ a {
   margin-top: 2rem;
   margin-bottom: 0.1rem;
   padding: 1rem 0;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   text-transform: capitalize;
   letter-spacing: 0.1em;
   cursor: pointer;
