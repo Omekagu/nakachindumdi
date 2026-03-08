@@ -42,10 +42,20 @@ export default function CookiesPopup () {
       <div className='cookies-popup'>
         <div className='cookies-container'>
           <p>
-            We use cookies to enhance your browsing experience, serve
-            personalized content, and analyze our traffic. By clicking “Accept”,
-            you consent to our use of cookies. For more information, please read
-            our{' '}
+            We and our partners use cookies and similar tracking technologies on
+            the website of NAKACHI NDUMDI to ensure the security and proper
+            functioning of the website, improve your browsing experience,
+            measure and analyze website traffic and performance, and provide
+            personalized content, offers, and services. Some cookies may also
+            enable features related to social media platforms and help us better
+            understand how visitors interact with our website. By clicking
+            “Accept All,” you consent to the use of all cookies on our website,
+            including those used for analytics and personalized content. If you
+            click “Reject All,” only cookies that are strictly necessary for the
+            security and basic operation of the website will be used. Your
+            cookie preferences will be stored for up to six months. For more
+            information about how we collect, use, and protect your information,
+            please refer to our Privacy Policy.{' '}
             <a href='/privacy-policy' target='_blank'>
               privacy policy
             </a>
@@ -54,10 +64,10 @@ export default function CookiesPopup () {
 
           <div className='cookies-actions'>
             <button className='accept-btn' onClick={handleAccept}>
-              Accept
+              Accept All
             </button>
             <button className='decline-btn' onClick={handleDecline}>
-              Decline
+              Decline All
             </button>
           </div>
         </div>

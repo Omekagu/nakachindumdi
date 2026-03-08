@@ -10,7 +10,7 @@ export default function TermsPage () {
   1.2 Head Office: 6900 Lenox Village Drive, Apt. 575, Nashville, Tennessee 37211, USA.<br />
   1.3 Contact Information:<br />
   • Email: support@nakachindumdi.com<br />
-  • Phone: 000-000-0000`,
+  • Phone: +1 615-557-3030`,
 
     `2. Ordering<br />
   2.1 Orders may only be placed through the Website.<br />

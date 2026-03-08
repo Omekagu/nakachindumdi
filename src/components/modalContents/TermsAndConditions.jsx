@@ -24,7 +24,7 @@ export default function TermsAndConditions () {
         <p>
           1.3 Contact Information:
           <br />• Email: support@nakachindumdi.com
-          <br />• Phone: 000-000-0000
+          <br />• Phone: +1 615-557-3030
         </p>
       </section>
 

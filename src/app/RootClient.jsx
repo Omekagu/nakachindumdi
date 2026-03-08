@@ -4,6 +4,7 @@ import Header from '../components/Header.jsx'
 import Footer from '@/components/Footer.jsx'
 import { NotificationProvider } from './context/NotificationContext.js'
 import '../scss/index.scss'
+import CookiesPopup from '@/components/CookiesPopup.jsx'
 
 export default function RootClient ({ children }) {
   const pathname = usePathname()
@@ -40,6 +41,7 @@ export default function RootClient ({ children }) {
       {!hideLayout && <Header />}
       {children}
       {!hideLayout && <Footer />}
+      <CookiesPopup />
     </NotificationProvider>
   )
 }

@@ -103,7 +103,7 @@ export default function ShippingReturns () {
         <h2>5. Contact Information</h2>
         <ul>
           <li>Email: support@nakachindumdi.com</li>
-          <li>Phone: 000-000-0000</li>
+          <li>Phone: +1 615-557-3030</li>
         </ul>
       </section>
     </div>

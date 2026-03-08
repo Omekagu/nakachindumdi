@@ -175,10 +175,10 @@ export default function Footer () {
           title='Customer care'
           links={[
             {
-              label: 'Email: support@nakachi.com',
-              href: 'mailto:support@nakachi.com'
+              label: 'Email: support@nakachindumdi.com',
+              href: 'mailto:support@nakachindumdi.com'
             },
-            { label: 'Call: +1 123-456-7890', href: 'tel:+11234567890' }
+            { label: 'Call: +1 615-557-3030', href: 'tel:+16155573030' }
           ]}
           section='legal'
           onLinkClick={handleLinkClick}

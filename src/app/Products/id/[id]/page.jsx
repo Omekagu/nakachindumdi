@@ -698,7 +698,7 @@ export default function ProductDetailsPage () {
                     className='accordion-title size'
                     onClick={() => toggleDropdown('size')}
                   >
-                    <span>Size</span>
+                    <span>Select Size</span>
                   </div>
                   <AnimatePresence>
                     {openDropdown === 'size' && (
@@ -903,7 +903,7 @@ export default function ProductDetailsPage () {
                 <span>
                   <span>Do you need help? </span>
                   <span>
-                    Contact us <a href='tel:+00000000000000'> 0000 000 0000</a>{' '}
+                    Contact us <a href='tel:+16155573030'> +1 615-557-3030</a>{' '}
                     Or, <br />
                     Email Us{' '}
                     <a href='mailto:Support@nakachindumdi.com'>

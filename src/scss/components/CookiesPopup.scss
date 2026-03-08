@@ -93,7 +93,7 @@
   .cookies-popup {
     position: fixed;
     top: auto;
-    bottom: 0;
+    bottom: -12px;
     right: 0;
     transform: none;
     max-width: 100%;
@@ -102,7 +102,6 @@
     //border-radius: 0;
     animation: slideUp 0.4s ease-in-out;
     position: fixed;
-    bottom: 0;
     margin: 11px;
     left: -10px;
 

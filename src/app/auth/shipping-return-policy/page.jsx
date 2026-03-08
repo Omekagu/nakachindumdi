@@ -37,7 +37,7 @@ export default function ShippingReturnsPolicy () {
 
     `5.1 All inquiries regarding shipping or returns may be directed to:
     • Email: support@nakachindumdi.com
-    • Phone: 000-000-0000`
+    • Phone: +1 615-557-3030`
   ]
 
   return (
