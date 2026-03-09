@@ -859,38 +859,66 @@ export default function ProductDetailsPage () {
 
             {/* DESCRIPTION */}
             {product.description && (
-              <div className='product-info-section'>
-                <span
-                  style={{ textTransform: 'capitalize', marginTop: '15px' }}
+              <div className='accordion-item'>
+                <div
+                  className='accordion-title'
+                  onClick={() => toggleDropdown('description')}
                 >
-                  Description
-                </span>
-                <p
-                  style={{
-                    whiteSpace: 'pre-wrap',
-                    lineHeight: '1.8',
-                    fontSize: '0.7rem'
-                  }}
-                >
-                  {product.description}
-                </p>
+                  <span>Description</span>
+                </div>
+                <AnimatePresence>
+                  {openDropdown === 'description' && (
+                    <motion.div
+                      className='accordion-content'
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                    >
+                      <p
+                        style={{
+                          whiteSpace: 'pre-wrap',
+                          lineHeight: '1.8',
+                          fontSize: '0.7rem'
+                        }}
+                      >
+                        {product.description}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
 
             {/* DETAILS */}
             {(product.details || product.brand) && (
-              <div className='product-info-section'>
-                <span style={{ marginTop: '15px' }}>Details</span>
-                <p
-                  style={{
-                    fontSize: '0.7rem',
-                    whiteSpace: 'pre-wrap',
-                    lineHeight: '1.8',
-                    marginBottom: '15px'
-                  }}
+              <div className='accordion-item'>
+                <div
+                  className='accordion-title'
+                  onClick={() => toggleDropdown('details')}
                 >
-                  {product.details || product.brand}
-                </p>
+                  <span>Details</span>
+                </div>
+                <AnimatePresence>
+                  {openDropdown === 'details' && (
+                    <motion.div
+                      className='accordion-content'
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                    >
+                      <p
+                        style={{
+                          fontSize: '0.7rem',
+                          whiteSpace: 'pre-wrap',
+                          lineHeight: '1.8',
+                          marginBottom: '15px'
+                        }}
+                      >
+                        {product.details || product.brand}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
 
