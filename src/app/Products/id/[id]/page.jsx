@@ -215,6 +215,7 @@ export default function ProductDetailsPage () {
             // Show the preview sheet
             setPreviewItem(cartItem)
             setPreviewCartCount(res.data.cartCount || 1)
+            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
             setPreviewOpen(true)
           } else {
             // showNotification(
@@ -253,6 +254,7 @@ export default function ProductDetailsPage () {
           }
 
           localStorage.setItem('guestCart', JSON.stringify(existingCart))
+          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
 
           // showNotification(
           //   'Measurement saved and product added to cart',
@@ -375,6 +377,7 @@ export default function ProductDetailsPage () {
             // open preview
             setPreviewItem(cartItem)
             setPreviewCartCount(res.data.cartCount || 1)
+            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
             setPreviewOpen(true)
           } else {
             // showNotification(
@@ -420,6 +423,7 @@ export default function ProductDetailsPage () {
           }
 
           localStorage.setItem('guestCart', JSON.stringify(existingCart))
+          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
 
           setProcessedMeasurementId(measurementId)
 
@@ -519,6 +523,7 @@ export default function ProductDetailsPage () {
           // show preview
           setPreviewItem(cartItem)
           setPreviewCartCount(res.data.cartCount || 1)
+          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
           setPreviewOpen(true)
         } else {
           // showNotification('❌ Failed to add item.', 'error')
@@ -547,6 +552,7 @@ export default function ProductDetailsPage () {
         }
 
         localStorage.setItem('guestCart', JSON.stringify(existingCart))
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
 
         // showNotification(
         //   isReserve
@@ -866,7 +872,7 @@ export default function ProductDetailsPage () {
                   className='accordion-title'
                   onClick={() => toggleDropdown('description')}
                 >
-                  <span>Description</span>
+                  <span>Product Description</span>
                   <span>+</span>
                 </div>
                 <AnimatePresence>
@@ -881,7 +887,7 @@ export default function ProductDetailsPage () {
                         style={{
                           whiteSpace: 'pre-wrap',
                           lineHeight: '1.8',
-                          fontSize: '0.7rem'
+                          fontSize: '0.8rem'
                         }}
                       >
                         {product.description}
@@ -899,7 +905,7 @@ export default function ProductDetailsPage () {
                   className='accordion-title'
                   onClick={() => toggleDropdown('details')}
                 >
-                  <span>Details</span>
+                  <span>Product Details</span>
                   <span>+</span>
                 </div>
                 <AnimatePresence>
@@ -912,7 +918,7 @@ export default function ProductDetailsPage () {
                     >
                       <p
                         style={{
-                          fontSize: '0.7rem',
+                          fontSize: '0.8rem',
                           whiteSpace: 'pre-wrap',
                           lineHeight: '1.8',
                           marginBottom: '15px'

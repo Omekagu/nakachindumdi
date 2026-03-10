@@ -79,12 +79,40 @@ export default function Header () {
   )
 
   // Load cart count
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const cart = JSON.parse(localStorage.getItem('cart')) || []
-      setCartCount(cart.length)
+  const refreshCartCount = () => {
+    if (typeof window === 'undefined') return
+    const uid = localStorage.getItem('userId')
+    const tok = localStorage.getItem('token')
+    if (uid && tok) {
+      // Logged-in: count stored by CartComponent via cartUpdated event detail
+      const stored = parseInt(localStorage.getItem('cartCount') || '0', 10)
+      setCartCount(stored)
+    } else {
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]')
+      setCartCount(guestCart.length)
     }
-  }, [activePanel])
+  }
+
+  useEffect(() => {
+    refreshCartCount()
+    const handleCartUpdated = e => {
+      if (e.detail?.count !== undefined) {
+        setCartCount(e.detail.count)
+        localStorage.setItem('cartCount', String(e.detail.count))
+      } else {
+        refreshCartCount()
+      }
+    }
+    const handleStorage = e => {
+      if (e.key === 'guestCart' || e.key === 'cartCount') refreshCartCount()
+    }
+    window.addEventListener('cartUpdated', handleCartUpdated)
+    window.addEventListener('storage', handleStorage)
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdated)
+      window.removeEventListener('storage', handleStorage)
+    }
+  }, [])
 
   if (!mounted) return null
 
@@ -95,7 +123,7 @@ export default function Header () {
     },
     { label: 'Search', action: () => togglePanel('search') },
 
-    { label: 'Cart', action: () => togglePanel('cart') }
+    { label: `Cart (${cartCount})`, action: () => togglePanel('cart') }
   ]
 
   return (
@@ -179,15 +207,16 @@ export default function Header () {
               {/* Cart icon */}
               <div
                 className='cartIcon'
-                style={{ marginTop: '3px' }}
+                style={{ marginTop: '3px', position: 'relative' }}
                 onClick={() => togglePanel('cart')}
               >
                 {activePanel === 'cart' ? (
                   <X strokeWidth={1} size={19} />
                 ) : (
-                  <HandbagIcon />
-
-                  // <Handbag strokeWidth={1} size={19} />
+                  <>
+                    <HandbagIcon />
+                    <span className='cart-badge'>{cartCount}</span>
+                  </>
                 )}
               </div>
             </div>

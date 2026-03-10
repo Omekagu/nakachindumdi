@@ -214,7 +214,26 @@
   .mobile-icon {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.8rem;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -7px;
+    background: #000;
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 500;
+    min-width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    pointer-events: none;
+    line-height: 1;
   }
 
   // SEARCH SKELETON

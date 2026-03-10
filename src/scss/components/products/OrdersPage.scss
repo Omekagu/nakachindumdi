@@ -51,7 +51,7 @@
   &__header {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.8rem;
     margin-bottom: 1.5rem;
 
     @media (min-width: 640px) {
@@ -78,7 +78,7 @@
   &__footer {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.8rem;
     font-size: 0.9rem;
     color: #666;
 

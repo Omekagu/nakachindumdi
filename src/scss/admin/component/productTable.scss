@@ -95,7 +95,7 @@
         background: var(--bg-secondary);
         border: 2px solid transparent;
         //border-radius: 12px;
-        padding: 0.6rem 0.8rem;
+        padding: 0.8rem 0.8rem;
         transition: all var(--transition-base);
         min-width: 0;
 
@@ -136,7 +136,7 @@
         );
         color: var(--text-light);
         border: none;
-        padding: 0.6rem 1rem;
+        padding: 0.8rem 1rem;
         //border-radius: 12px;
         font-weight: 700;
         cursor: pointer;
@@ -208,7 +208,7 @@
             border: 1px solid var(--border-color);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            padding: 0.4rem 0.6rem;
+            padding: 0.4rem 0.8rem;
             //border-radius: 6px;
             cursor: pointer;
             transition: all var(--transition-base);
@@ -425,7 +425,7 @@
           /* Status */
           .status {
             display: inline-block;
-            padding: 0.3rem 0.6rem;
+            padding: 0.3rem 0.8rem;
             //border-radius: 6px;
             font-size: 0.65rem;
             font-weight: 700;

@@ -201,7 +201,7 @@ export default function OrdersTable () {
           <button
             onClick={fetchAllOrders}
             style={{
-              padding: '0.6rem 1.2rem',
+              padding: '0.8rem 1.2rem',
               background: 'linear-gradient(135deg, #d4af37, #c19e35)',
               color: '#fff',
               border: 'none',

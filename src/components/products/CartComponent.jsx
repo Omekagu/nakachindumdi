@@ -505,10 +505,13 @@ export default function CartComponent ({ onClose }) {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/${uid}`,
           { headers: { Authorization: `Bearer ${tok}` } }
         )
-        setItems(res.data.cart || [])
+        const cart = res.data.cart || []
+        setItems(cart)
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: cart.length } }))
       } else {
         const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]')
         setItems(guestCart)
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: guestCart.length } }))
       }
     } catch (err) {
       setError(err.response?.data?.msg || err.message)
@@ -560,13 +563,16 @@ export default function CartComponent ({ onClose }) {
             headers: { Authorization: `Bearer ${token}` }
           }
         )
-        setItems(res.data.cart || [])
+        const updatedCart = res.data.cart || []
+        setItems(updatedCart)
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: updatedCart.length } }))
       } catch (err) {
         console.error('Failed to remove item:', err)
         setItems(items)
       }
     } else {
       localStorage.setItem('guestCart', JSON.stringify(updated))
+      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: updated.length } }))
     }
   }
 
