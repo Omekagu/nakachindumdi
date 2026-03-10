@@ -48,14 +48,21 @@ export default function CookiesPopup () {
             measure and analyze website traffic and performance, and provide
             personalized content, offers, and services. Some cookies may also
             enable features related to social media platforms and help us better
-            understand how visitors interact with our website. By clicking
-            “Accept All,” you consent to the use of all cookies on our website,
-            including those used for analytics and personalized content. If you
-            click “Reject All,” only cookies that are strictly necessary for the
-            security and basic operation of the website will be used. Your
-            cookie preferences will be stored for up to six months. For more
-            information about how we collect, use, and protect your information,
-            please refer to our Privacy Policy.{' '}
+            understand how visitors interact with our website.
+            <br />
+            <br />
+            {''}
+            {''}
+            By clicking “Accept All,” you consent to the use of all cookies on
+            our website, including those used for analytics and personalized
+            content. If you click “Reject All,” only cookies that are strictly
+            necessary for the security and basic operation of the website will
+            be used.
+            <br />
+            <br />
+            Your cookie preferences will be stored for up to six months. For
+            more information about how we collect, use, and protect your
+            information, please refer to our{' '}
             <a href='/privacy-policy' target='_blank'>
               privacy policy
             </a>

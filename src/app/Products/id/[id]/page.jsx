@@ -699,6 +699,7 @@ export default function ProductDetailsPage () {
                     onClick={() => toggleDropdown('size')}
                   >
                     <span>Select Size</span>
+                    <span>+</span>
                   </div>
                   <AnimatePresence>
                     {openDropdown === 'size' && (
@@ -856,7 +857,8 @@ export default function ProductDetailsPage () {
                   )}
                 </div>
               )}
-
+            <br />
+            <br />
             {/* DESCRIPTION */}
             {product.description && (
               <div className='accordion-item'>
@@ -865,6 +867,7 @@ export default function ProductDetailsPage () {
                   onClick={() => toggleDropdown('description')}
                 >
                   <span>Description</span>
+                  <span>+</span>
                 </div>
                 <AnimatePresence>
                   {openDropdown === 'description' && (
@@ -897,6 +900,7 @@ export default function ProductDetailsPage () {
                   onClick={() => toggleDropdown('details')}
                 >
                   <span>Details</span>
+                  <span>+</span>
                 </div>
                 <AnimatePresence>
                   {openDropdown === 'details' && (
@@ -922,25 +926,39 @@ export default function ProductDetailsPage () {
               </div>
             )}
 
-            {/* NEED HELP */}
+            {/* NEED HELP*/}
             <div className='accordion-item'>
               <div
                 className='accordion-title'
-                onClick={() => toggleDropdown('info')}
+                onClick={() => toggleDropdown('needhelp')}
               >
-                <span>
-                  <span>Do you need help? </span>
-                  <span>
-                    Contact us <a href='tel:+16155573030'> +1 615-557-3030</a>{' '}
-                    Or, <br />
-                    Email Us{' '}
-                    <a href='mailto:Support@nakachindumdi.com'>
-                      {' '}
-                      Support@nakachindumdi.com
-                    </a>
-                  </span>
-                </span>
+                <span>Assistance</span>
+                <span>+</span>
               </div>
+              <AnimatePresence>
+                {openDropdown === 'needhelp' && (
+                  <motion.div
+                    className='accordion-content'
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                  >
+                    <span>
+                      <span>Do you need help? </span>
+                      <span>
+                        Contact us{' '}
+                        <a href='tel:+16155573030'> +1 615-557-3030</a>
+                        <br />
+                        Email Us{' '}
+                        <a href='mailto:Support@nakachindumdi.com'>
+                          {' '}
+                          Support@nakachindumdi.com
+                        </a>
+                      </span>
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </motion.div>

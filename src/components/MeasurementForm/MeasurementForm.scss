@@ -74,7 +74,7 @@ p {
 
 .mf-units {
   background: #faf7f3;
-  //border-radius: 999px;
+
   padding: 4px;
   border: 1px solid #f0ece7;
   display: inline-flex;
@@ -86,7 +86,6 @@ p {
   font-size: 10px;
   color: $muted;
   cursor: pointer;
-  //border-radius: 999px;
 }
 .btn-unit.on {
   background: $accent;
@@ -117,7 +116,6 @@ p {
 }
 .type-btn {
   padding: 8px 12px;
-  //border-radius: 999px;
   border: 1px solid #eee;
   background: transparent;
   color: $muted;
@@ -184,13 +182,11 @@ p {
 }
 .btn {
   padding: 10px 14px;
-  // //border-radius: 8px;
   cursor: pointer;
   font-weight: 700;
 }
 .btn.ghost {
   background: transparent;
-  // border: 1px solid #efe9e0;
   color: $muted;
 }
 .btn.primary {

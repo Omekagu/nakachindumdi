@@ -132,7 +132,6 @@ body {
       color: var(--text-light);
       border: none;
       padding: 0.875rem 2.25rem;
-      //border-radius: var(--radius-md);
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
@@ -408,7 +407,7 @@ body {
 
   .editor-thumb {
     aspect-ratio: 1;
-    //border-radius: var(--radius-lg);
+
     border: 2px dashed var(--border-color);
     background: var(--bg-secondary);
     overflow: hidden;
