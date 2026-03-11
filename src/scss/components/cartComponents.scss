@@ -99,6 +99,7 @@
 /* Cart Items Section */
 .cart-items {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 1.5rem;
   scrollbar-width: thin;
