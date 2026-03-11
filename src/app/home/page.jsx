@@ -9,13 +9,13 @@ export default function page () {
         images={[
           {
             src: '/nakachi_landing.jpeg',
-            width: '80%',
-            height: '80%'
+            width: '100%',
+            height: '100%'
           },
           {
             src: '/nakachi_landing.jpeg',
-            width: '80%',
-            height: '80%'
+            width: '100%',
+            height: '100%'
           }
         ]}
       />
