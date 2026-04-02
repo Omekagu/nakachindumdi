@@ -20,7 +20,7 @@ export default function NewsletterForm () {
               Please check the box if you would like to receive the NAKACHI
               NDUMDI Newsletter (information about our products, services and
               events). By subscribing, you agree to our{' '}
-              <a href='#'>privacy policy</a>.
+              <a href='#'>Privacy Policy</a>.
             </label>
           </div>
 

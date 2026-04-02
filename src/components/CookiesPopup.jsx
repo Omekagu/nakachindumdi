@@ -64,7 +64,7 @@ export default function CookiesPopup () {
             more information about how we collect, use, and protect your
             information, please refer to our{' '}
             <a href='/privacy-policy' target='_blank'>
-              privacy policy
+              Privacy Policy
             </a>
             .
           </p>

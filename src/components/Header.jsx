@@ -47,7 +47,7 @@ export default function Header () {
   // null | 'menu' | 'cart' | 'search'
 
   const [dropdownOpen, setDropdownOpen] = useState(null)
-  const [cartCount, setCartCount] = useState(0)
+  const [cartCount, setCartCount] = useState('')
   const [token, setToken] = useState(null)
   const [mounted, setMounted] = useState(false)
 
@@ -85,7 +85,7 @@ export default function Header () {
     const tok = localStorage.getItem('token')
     if (uid && tok) {
       // Logged-in: count stored by CartComponent via cartUpdated event detail
-      const stored = parseInt(localStorage.getItem('cartCount') || '0', 10)
+      const stored = parseInt(localStorage.getItem('cartCount') || '', 10)
       setCartCount(stored)
     } else {
       const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]')
@@ -123,7 +123,7 @@ export default function Header () {
     },
     { label: 'Search', action: () => togglePanel('search') },
 
-    { label: `Cart (${cartCount})`, action: () => togglePanel('cart') }
+    { label: cartCount > 0 ? `Cart (${cartCount})` : 'Cart', action: () => togglePanel('cart') }
   ]
 
   return (
@@ -215,7 +215,7 @@ export default function Header () {
                 ) : (
                   <>
                     <HandbagIcon />
-                    <span className='cart-badge'>{cartCount}</span>
+                    {cartCount > 0 && <span className='cart-badge'>{cartCount}</span>}
                   </>
                 )}
               </div>

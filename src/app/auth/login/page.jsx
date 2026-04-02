@@ -478,7 +478,7 @@ export default function AuthPage () {
 
         {/* Footer Links */}
         <div className='links'>
-          <a href='/auth/privacy-cookies'>Privacy policy</a>
+          <a href='/auth/privacy-cookies'>Privacy Policy</a>
           <span className='separator'>|</span>
           <a href='/auth/privacy-cookies'>Terms of service</a>
         </div>

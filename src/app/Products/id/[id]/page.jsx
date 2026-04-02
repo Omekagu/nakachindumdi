@@ -215,7 +215,11 @@ export default function ProductDetailsPage () {
             // Show the preview sheet
             setPreviewItem(cartItem)
             setPreviewCartCount(res.data.cartCount || 1)
-            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
+            window.dispatchEvent(
+              new CustomEvent('cartUpdated', {
+                detail: { count: res.data.cartCount || 1 }
+              })
+            )
             setPreviewOpen(true)
           } else {
             // showNotification(
@@ -254,7 +258,11 @@ export default function ProductDetailsPage () {
           }
 
           localStorage.setItem('guestCart', JSON.stringify(existingCart))
-          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
+          window.dispatchEvent(
+            new CustomEvent('cartUpdated', {
+              detail: { count: existingCart.length }
+            })
+          )
 
           // showNotification(
           //   'Measurement saved and product added to cart',
@@ -377,7 +385,11 @@ export default function ProductDetailsPage () {
             // open preview
             setPreviewItem(cartItem)
             setPreviewCartCount(res.data.cartCount || 1)
-            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
+            window.dispatchEvent(
+              new CustomEvent('cartUpdated', {
+                detail: { count: res.data.cartCount || 1 }
+              })
+            )
             setPreviewOpen(true)
           } else {
             // showNotification(
@@ -423,7 +435,11 @@ export default function ProductDetailsPage () {
           }
 
           localStorage.setItem('guestCart', JSON.stringify(existingCart))
-          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
+          window.dispatchEvent(
+            new CustomEvent('cartUpdated', {
+              detail: { count: existingCart.length }
+            })
+          )
 
           setProcessedMeasurementId(measurementId)
 
@@ -523,7 +539,11 @@ export default function ProductDetailsPage () {
           // show preview
           setPreviewItem(cartItem)
           setPreviewCartCount(res.data.cartCount || 1)
-          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: res.data.cartCount || 1 } }))
+          window.dispatchEvent(
+            new CustomEvent('cartUpdated', {
+              detail: { count: res.data.cartCount || 1 }
+            })
+          )
           setPreviewOpen(true)
         } else {
           // showNotification('❌ Failed to add item.', 'error')
@@ -552,7 +572,11 @@ export default function ProductDetailsPage () {
         }
 
         localStorage.setItem('guestCart', JSON.stringify(existingCart))
-        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: existingCart.length } }))
+        window.dispatchEvent(
+          new CustomEvent('cartUpdated', {
+            detail: { count: existingCart.length }
+          })
+        )
 
         // showNotification(
         //   isReserve
@@ -952,10 +976,12 @@ export default function ProductDetailsPage () {
                     <span>
                       <span>Do you need help? </span>
                       <span>
-                        Contact us{' '}
+                        Contact us <br />
                         <a href='tel:+16155573030'> +1 615-557-3030</a>
                         <br />
-                        Email Us{' '}
+                        or,
+                        <br />
+                        Email Us <br />
                         <a href='mailto:Support@nakachindumdi.com'>
                           {' '}
                           Support@nakachindumdi.com

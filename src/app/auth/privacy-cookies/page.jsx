@@ -17,7 +17,7 @@ export default function PoliciesPage () {
 
       <div className='policy-section'>
         <div className='policy-header' onClick={() => handleToggle('privacy')}>
-          Privacy policy
+          Privacy Policy
           <span>{activePolicy === 'privacy' ? '-' : '+'}</span>
         </div>
         {activePolicy === 'privacy' && (

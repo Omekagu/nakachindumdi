@@ -18,7 +18,7 @@
     padding-bottom: 0.8rem;
 
     .footer-title {
-      font-size: 0.8rem;
+      font-size: 0.5rem;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -30,12 +30,12 @@
       color: #111;
 
       .toggle-icon {
-        font-size: 0.8rem;
+        font-size: 0.5rem;
         margin-left: 0.8rem;
       }
     }
     .footer-link-label {
-      font-size: 0.8rem;
+      font-size: 0.5rem;
       color: #000;
       text-transform: none;
     }
@@ -44,7 +44,7 @@
   .footer-links {
     margin-top: 0.8rem;
     list-style: none;
-    font-size: 0.8rem !important;
+    font-size: 0.5rem !important;
     padding: 0;
     li {
       margin: 0.3rem 0;
@@ -64,7 +64,7 @@
     margin-top: -1.5rem;
     list-style: none;
     transition: all 0.3s ease-in-out;
-    font-size: 0.8rem;
+    font-size: 0.5rem;
 
     li a {
       color: #aaa;
@@ -81,7 +81,7 @@
 
   .footer-current {
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.5rem;
     color: #111;
     border-top: 1px solid #f0f0f0;
     padding-top: 0.5rem;
@@ -93,7 +93,7 @@
 
   .footer-bottom {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.5rem;
     color: #888;
     margin-top: 1rem;
     p {
