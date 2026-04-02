@@ -3,7 +3,7 @@ import ContentPage from '@/components/FooterContent'
 
 export default function PrivacyPolicy () {
   const privacyContent = [
-    `Effective Date: [0000]`,
+    `Effective Date: 7 December 2025`,
 
     `1. Introduction<br />
 NAKACHI NDUMDI LLC (“we,” “our,” or “us”) recognizes the importance of protecting the privacy and security of your personal information.<br />
@@ -64,7 +64,7 @@ We may require verification of your identity before responding to your request.`
 
     `9. Changes to This Policy<br />
 We may update this Privacy Policy from time to time to reflect changes in our practices, legal obligations, or other circumstances.<br />
-Updates will be posted on this page with a revised “Effective Date.”`,
+Updates will be posted on this page with a revised “7 December 2025.”`,
 
     `10. Contact Information<br />
 If you have any questions about this Privacy Policy or how your personal data is handled, you may contact us at:<br />

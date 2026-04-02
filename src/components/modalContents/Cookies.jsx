@@ -88,7 +88,7 @@ export default function CookiePolicy () {
         <h3>6. Amendments</h3>
         <p>
           We reserve the right to update this Cookie Policy at any time. Changes
-          will be posted on this page with an updated “Effective Date.”
+          will be posted on this page with an updated “7 December 2025.”
         </p>
       </section>
 

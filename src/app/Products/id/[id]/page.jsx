@@ -495,7 +495,7 @@ export default function ProductDetailsPage () {
       // 4. Everything else — require size if sizes exist
       else {
         if (product.sizes?.length > 0 && !selectedSize) {
-          setSizeError('select a size')
+          setSizeError('Select a size')
           return
         }
       }
@@ -982,9 +982,9 @@ export default function ProductDetailsPage () {
                         or,
                         <br />
                         Email Us <br />
-                        <a href='mailto:Support@nakachindumdi.com'>
+                        <a href='mailto:support@nakachindumdi.com'>
                           {' '}
-                          Support@nakachindumdi.com
+                          support@nakachindumdi.com
                         </a>
                       </span>
                     </span>

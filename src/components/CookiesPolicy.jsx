@@ -3,7 +3,7 @@ import ContentPage from '@/components/FooterContent'
 
 export default function CookiePolicy () {
   const cookieContent = [
-    `Last Updated: [00000]`,
+    `Last Updated: 10 March 2026<br />`,
 
     `NAKACHI NDUMDI LLC (“NAKACHI NDUMDI,” “we,” “us,” or “our”) is committed to being transparent about the technologies we use to collect and process information when you access or interact with www.nakachindumdi.com (the “Website”).`,
 
@@ -38,7 +38,7 @@ Cookies do not harm your device, and most contain only anonymous information suc
 
     `6. Amendments:<br />
 (a) We reserve the right to update or amend this Cookie Policy at any time.<br />
-(b) Changes will be posted on this page with an updated “Effective Date.”`,
+(b) Changes will be posted on this page with an updated “7 December 2025.”`,
 
     `7. Contact Information:<br />
 If you have any questions about this Cookie Policy or our use of cookies, you may contact us at:<br />
