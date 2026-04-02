@@ -41,13 +41,26 @@ const navMenu = [
   }
 ]
 
-export default function Header () {
-  // Only ONE state controls all open panels
-  const [activePanel, setActivePanel] = useState(null)
-  // null | 'menu' | 'cart' | 'search'
+const HandbagIcon = ({ size = 19, strokeWidth = 1 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth={strokeWidth}
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M6 6h12l1 14H5L6 6z' />
+    <path d='M9 6V5a3 3 0 0 1 6 0v1' />
+  </svg>
+)
 
+export default function Header () {
+  const [activePanel, setActivePanel] = useState(null)
   const [dropdownOpen, setDropdownOpen] = useState(null)
-  const [cartCount, setCartCount] = useState('')
+  const [cartCount, setCartCount] = useState(0)
   const [token, setToken] = useState(null)
   const [mounted, setMounted] = useState(false)
 
@@ -55,37 +68,19 @@ export default function Header () {
     setActivePanel(prev => (prev === panel ? null : panel))
   }
 
-  // Mount check + token load
   useEffect(() => {
     setMounted(true)
     if (typeof window !== 'undefined') {
       setToken(localStorage.getItem('token'))
     }
   }, [])
-  const HandbagIcon = ({ size = 19, strokeWidth = 1 }) => (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth={strokeWidth}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M6 6h12l1 14H5L6 6z' />
-      <path d='M9 6V5a3 3 0 0 1 6 0v1' />
-    </svg>
-  )
 
-  // Load cart count
   const refreshCartCount = () => {
     if (typeof window === 'undefined') return
     const uid = localStorage.getItem('userId')
     const tok = localStorage.getItem('token')
     if (uid && tok) {
-      // Logged-in: count stored by CartComponent via cartUpdated event detail
-      const stored = parseInt(localStorage.getItem('cartCount') || '', 10)
+      const stored = parseInt(localStorage.getItem('cartCount') || '0', 10)
       setCartCount(stored)
     } else {
       const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]')
@@ -122,19 +117,20 @@ export default function Header () {
       href: token ? '/user/user-profile' : '/auth/login'
     },
     { label: 'Search', action: () => togglePanel('search') },
-
-    { label: cartCount > 0 ? `Cart (${cartCount})` : 'Cart', action: () => togglePanel('cart') }
+    {
+      label: cartCount > 0 ? `Cart (${cartCount})` : 'Cart',
+      action: () => togglePanel('cart')
+    }
   ]
 
   return (
     <>
       <header>
         <nav className='site-header'>
-          {/* Left navigation */}
+          {/* LEFT */}
           <div className='nav-left'>
             <div
               className='hamburger-menu'
-              style={{ marginTop: '5px', marginLeft: '1px' }}
               onClick={() => togglePanel('menu')}
               aria-label={activePanel === 'menu' ? 'Close menu' : 'Open menu'}
             >
@@ -168,12 +164,12 @@ export default function Header () {
             </ul>
           </div>
 
-          {/* Center logo */}
+          {/* CENTER LOGO — absolutely centered, never pushed by flex siblings */}
           <div className='logo'>
             <Link href='/'>NAKACHI NDUMDI</Link>
           </div>
 
-          {/* Right navigation */}
+          {/* RIGHT */}
           <div className='nav-right'>
             <ul>
               {accountMenu.map(item => (
@@ -190,11 +186,9 @@ export default function Header () {
             </ul>
 
             {/* Mobile icons */}
-            <div className='mobile-icon' style={{ marginRight: '-10px' }}>
-              {/* Search icon */}
+            <div className='mobile-icon'>
               <div
                 className='search-icon'
-                style={{ marginTop: '1px' }}
                 onClick={() => togglePanel('search')}
               >
                 {activePanel === 'search' ? (
@@ -204,10 +198,8 @@ export default function Header () {
                 )}
               </div>
 
-              {/* Cart icon */}
               <div
-                className='cartIcon'
-                style={{ marginTop: '3px', position: 'relative' }}
+                className='cart-icon-wrap'
                 onClick={() => togglePanel('cart')}
               >
                 {activePanel === 'cart' ? (
@@ -215,7 +207,9 @@ export default function Header () {
                 ) : (
                   <>
                     <HandbagIcon />
-                    {cartCount > 0 && <span className='cart-badge'>{cartCount}</span>}
+                    {cartCount > 0 && (
+                      <span className='cart-badge'>{cartCount}</span>
+                    )}
                   </>
                 )}
               </div>
@@ -224,15 +218,12 @@ export default function Header () {
         </nav>
       </header>
 
-      {/* Panels – only one can ever be open */}
       {activePanel === 'cart' && (
         <CartComponent onClose={() => setActivePanel(null)} />
       )}
-
       {activePanel === 'search' && (
         <SearchComponent onClose={() => setActivePanel(null)} />
       )}
-
       {activePanel === 'menu' && (
         <DropDown onClose={() => setActivePanel(null)} isOpen />
       )}
