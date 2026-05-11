@@ -691,12 +691,10 @@ export default function ProductDetailsPage () {
                 <div className='accordion-title'>
                   <span>
                     <p style={{ fontSize: '8px' }}>
-                      This item is produced in very limited quantities and is
-                      available exclusively by reservation. A 50% deposit will
-                      be collected at checkout, with the remaining balance
-                      charged upon completion of tailoring and prior to
-                      shipment. For full details, please refer to our Terms &
-                      Conditions page.
+                      Available exclusively by reservation. A 50% deposit is
+                      required at checkout, with the remaining balance due prior
+                      to shipment after final tailoring. Please refer to our
+                      Terms & Conditions for full details.
                     </p>
                   </span>
                 </div>
