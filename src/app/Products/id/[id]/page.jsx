@@ -690,7 +690,7 @@ export default function ProductDetailsPage () {
               <div className='margin-top'>
                 <div className='accordion-title'>
                   <span>
-                    <p style={{ fontSize: '8px' }}>
+                    <p>
                       Available exclusively by reservation. A 50% deposit is
                       required at checkout, with the remaining balance due prior
                       to shipment after final tailoring. Please refer to our
