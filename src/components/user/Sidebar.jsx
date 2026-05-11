@@ -60,11 +60,14 @@ export default function Sidebar ({ isOpen, onClose }) {
 
   const adminLinks = [
     { href: '/admin/dashboard', label: 'Dashboard' },
-    { href: '/admin/customers', label: 'Customers' },
-    { href: '/admin/product-upload', label: 'Products Upload' },
+    { href: '/admin/orders', label: 'Orders' },
     { href: '/admin/products', label: 'Products' },
-    { href: '/admin/orders', label: 'Orders' }
-    // { href: '/admin/user-measurement', label: 'Measurement' },
+    { href: '/admin/product-upload', label: 'Product Upload' },
+    { href: '/admin/customers', label: 'Customers' },
+    // { href: '/admin/sales', label: 'Sales' },
+    // { href: '/admin/shipping', label: 'Shipping' },
+    { href: '/admin/payments', label: 'Payments' }
+    // { href: '/admin/user-measurement', label: 'Measurements' },
     // { href: '/admin/waiting-list', label: 'Waiting List' }
   ]
 

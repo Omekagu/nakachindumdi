@@ -11,6 +11,7 @@ import {
 import { loadStripe } from '@stripe/stripe-js'
 import SkeletonProductCard from '../SkeletonProductCard'
 import OrderSuccessfulPopup from '../OrderSuccessfulPopup'
+import AuthorizeNetForm from './AuthorizeNetForm'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
@@ -478,6 +479,9 @@ export default function CartComponent ({ onClose }) {
   const [userId, setUserId] = useState(null)
   const [clientSecret, setClientSecret] = useState(null)
   const [isGuest, setIsGuest] = useState(true)
+  const [paymentSettings, setPaymentSettings] = useState(null)
+  const [selectedGateway, setSelectedGateway] = useState('stripe')
+  const [showCheckout, setShowCheckout] = useState(false)
 
   // ✨ NEW: Order success state
   const [orderSuccess, setOrderSuccess] = useState({
@@ -584,31 +588,38 @@ export default function CartComponent ({ onClose }) {
 
   const initiateCheckout = async (uid, tok, isGuestCheckout) => {
     try {
-      const payloadItems = items.map(item => ({
-        productId:
-          typeof item.productId === 'object'
-            ? item.productId._id
-            : item.productId,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.image,
-        brand: item.brand,
-        size: item.size,
-        color: item.color,
-        measurementId: item.measurementId
-      }))
-
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
-        {
-          items: payloadItems,
-          userId: uid,
-          shippingAddress: null,
-          isGuestCheckout
-        }
+      // Fetch active gateways
+      const settingsRes = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/settings`
       )
-      setClientSecret(res.data.clientSecret)
+      const ps = settingsRes.data
+      setPaymentSettings(ps)
+
+      const defaultGateway = ps.stripe ? 'stripe' : 'authorizenet'
+      setSelectedGateway(defaultGateway)
+
+      if (ps.stripe) {
+        const payloadItems = items.map(item => ({
+          productId:
+            typeof item.productId === 'object' ? item.productId._id : item.productId,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          brand: item.brand,
+          size: item.size,
+          color: item.color,
+          measurementId: item.measurementId
+        }))
+
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
+          { items: payloadItems, userId: uid, isGuestCheckout }
+        )
+        setClientSecret(res.data.clientSecret)
+      }
+
+      setShowCheckout(true)
     } catch (err) {
       console.error('Checkout error:', err)
       alert(err.response?.data?.msg || 'Failed to start checkout')
@@ -620,22 +631,46 @@ export default function CartComponent ({ onClose }) {
     await initiateCheckout(userId, token, isGuest)
   }
 
-  // ✨ NEW: Handle successful order
-  const handleOrderSuccess = (paymentIntent, orderData) => {
-    console.log('Order successful:', {
-      paymentIntent,
-      orderData,
-      items
-    })
+  const handleGatewaySwitch = async gateway => {
+    setSelectedGateway(gateway)
+    // Ensure Stripe payment intent is ready when switching to Stripe
+    if (gateway === 'stripe' && !clientSecret && paymentSettings?.stripe) {
+      try {
+        const payloadItems = items.map(item => ({
+          productId:
+            typeof item.productId === 'object' ? item.productId._id : item.productId,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          brand: item.brand,
+          size: item.size,
+          color: item.color,
+          measurementId: item.measurementId
+        }))
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
+          { items: payloadItems, userId, isGuestCheckout: isGuest }
+        )
+        setClientSecret(res.data.clientSecret)
+      } catch (err) {
+        console.error('Failed to create payment intent:', err)
+      }
+    }
+  }
 
-    // Calculate totals
+  // Handle successful order (works for both Stripe and AuthNet)
+  const handleOrderSuccess = (transactionData, orderData) => {
+    console.log('Order successful:', { transactionData, orderData, items })
+
     const subtotalAmount = items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     )
     const shippingCost = orderData.shippingCost || 10
     const taxAmount = orderData.tax || 0
-    const totalAmount = paymentIntent.amount / 100
+    // transactionData.amount is always in cents (both Stripe and AuthNet normalised in AuthorizeNetForm)
+    const totalAmount = transactionData.amount / 100
 
     // Show success popup
     setOrderSuccess({
@@ -652,10 +687,10 @@ export default function CartComponent ({ onClose }) {
       }
     })
 
-    // Clear checkout form
     setClientSecret(null)
+    setShowCheckout(false)
+    setPaymentSettings(null)
 
-    // Clear cart data
     if (isGuest) {
       localStorage.removeItem('guestCart')
     }
@@ -696,7 +731,7 @@ export default function CartComponent ({ onClose }) {
       <div className='backdrop' onClick={onClose}></div>
 
       <div className='cart-panel'>
-        {!loading && isEmpty && !clientSecret && !orderSuccess.isOpen ? (
+        {!loading && isEmpty && !showCheckout && !orderSuccess.isOpen ? (
           <div className='empty-cart'>
             <p>No Order yet</p>
             <button className='continue-shopping-btn' onClick={onClose}>
@@ -705,7 +740,7 @@ export default function CartComponent ({ onClose }) {
           </div>
         ) : (
           <>
-            {!clientSecret && !orderSuccess.isOpen && (
+            {!showCheckout && !orderSuccess.isOpen && (
               <div className='cart-items'>
                 <div className='cart-header-inline'>
                   <span className='cart-count'>Cart ({items.length})</span>
@@ -756,29 +791,80 @@ export default function CartComponent ({ onClose }) {
               </div>
             )}
 
-            {clientSecret && !orderSuccess.isOpen && (
+            {showCheckout && !orderSuccess.isOpen && (
               <div className='cart-items'>
                 <div className='cart-header-inline'>
                   <span className='cart-count'>Checkout</span>
-                  <button className='close-cart-btn' onClick={() => setClientSecret(null)}>
+                  <button
+                    className='close-cart-btn'
+                    onClick={() => {
+                      setShowCheckout(false)
+                      setClientSecret(null)
+                      setPaymentSettings(null)
+                    }}
+                  >
                     ✕
                   </button>
                 </div>
-                <Elements stripe={stripePromise}>
-                  <EnhancedCheckoutForm
-                    clientSecret={clientSecret}
+
+                {/* Gateway switcher — shown only when both are active */}
+                {paymentSettings?.stripe && paymentSettings?.authorizenet && (
+                  <div style={{ display: 'flex', gap: 8, padding: '0 0 16px' }}>
+                    {[
+                      { id: 'stripe', label: '💳 Stripe' },
+                      { id: 'authorizenet', label: '🔒 Authorize.Net' }
+                    ].map(g => (
+                      <button
+                        key={g.id}
+                        onClick={() => handleGatewaySwitch(g.id)}
+                        style={{
+                          flex: 1,
+                          padding: '10px 0',
+                          border: `2px solid ${selectedGateway === g.id ? '#111' : '#ddd'}`,
+                          borderRadius: 8,
+                          background: selectedGateway === g.id ? '#111' : '#fff',
+                          color: selectedGateway === g.id ? '#fff' : '#444',
+                          fontWeight: 600,
+                          fontSize: 13,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {g.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {selectedGateway === 'stripe' && clientSecret && (
+                  <Elements stripe={stripePromise}>
+                    <EnhancedCheckoutForm
+                      clientSecret={clientSecret}
+                      userId={userId}
+                      token={token}
+                      items={items}
+                      isGuest={isGuest}
+                      onSuccess={handleOrderSuccess}
+                    />
+                  </Elements>
+                )}
+
+                {selectedGateway === 'authorizenet' && paymentSettings && (
+                  <AuthorizeNetForm
+                    apiLoginId={paymentSettings.authorizeNetApiLoginId}
+                    clientKey={paymentSettings.authorizeNetClientKey}
+                    testMode={paymentSettings.authorizeNetTestMode}
+                    items={items}
                     userId={userId}
                     token={token}
-                    items={items}
                     isGuest={isGuest}
                     onSuccess={handleOrderSuccess}
                   />
-                </Elements>
+                )}
               </div>
             )}
 
             <div className='cart-footer'>
-              {!clientSecret && !orderSuccess.isOpen && (
+              {!showCheckout && !orderSuccess.isOpen && (
                 <>
                   <div className='subtotal'>
                     <span>Subtotal</span>
