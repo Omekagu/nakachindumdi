@@ -5,7 +5,10 @@ import axios from 'axios'
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL
 
 export default function PaymentSettingsPage () {
-  const [settings, setSettings] = useState({ stripe: true, authorizenet: false })
+  const [settings, setSettings] = useState({
+    stripe: true,
+    authorizenet: false
+  })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState(null)
@@ -17,10 +20,16 @@ export default function PaymentSettingsPage () {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(res => {
-        setSettings({ stripe: res.data.stripe, authorizenet: res.data.authorizenet })
+        setSettings({
+          stripe: res.data.stripe,
+          authorizenet: res.data.authorizenet
+        })
       })
       .catch(err => {
-        setMessage({ type: 'error', text: err.response?.data?.msg || 'Failed to load settings' })
+        setMessage({
+          type: 'error',
+          text: err.response?.data?.msg || 'Failed to load settings'
+        })
       })
       .finally(() => setLoading(false))
   }, [])
@@ -39,14 +48,15 @@ export default function PaymentSettingsPage () {
     setMessage(null)
     try {
       const token = localStorage.getItem('token')
-      await axios.put(
-        `${BACKEND}/api/payment/settings`,
-        settings,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      await axios.put(`${BACKEND}/api/payment/settings`, settings, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       setMessage({ type: 'success', text: 'Payment settings saved.' })
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.msg || 'Save failed' })
+      setMessage({
+        type: 'error',
+        text: err.response?.data?.msg || 'Save failed'
+      })
     } finally {
       setSaving(false)
     }
@@ -65,7 +75,8 @@ export default function PaymentSettingsPage () {
       <div style={styles.card}>
         <h2 style={styles.title}>Payment Gateways</h2>
         <p style={styles.subtitle}>
-          Choose which payment processors are available at checkout. At least one must remain active.
+          Choose which payment processors are available at checkout. At least
+          one must remain active.
         </p>
 
         <div style={styles.gatewayList}>
@@ -79,7 +90,8 @@ export default function PaymentSettingsPage () {
                 Credit / debit card, Apple Pay, Google Pay.
                 <br />
                 <span style={styles.envNote}>
-                  Keys: <code>STRIPE_SECRET_KEY</code>, <code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code>
+                  Keys: <code>STRIPE_SECRET_KEY</code>,{' '}
+                  <code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code>
                 </span>
               </div>
             </div>
@@ -108,7 +120,8 @@ export default function PaymentSettingsPage () {
                 Credit / debit card via Accept.js tokenization.
                 <br />
                 <span style={styles.envNote}>
-                  Keys: <code>AUTHORIZENET_API_LOGIN_ID</code>, <code>AUTHORIZENET_TRANSACTION_KEY</code>,{' '}
+                  Keys: <code>AUTHORIZENET_API_LOGIN_ID</code>,{' '}
+                  <code>AUTHORIZENET_TRANSACTION_KEY</code>,{' '}
                   <code>AUTHORIZENET_CLIENT_KEY</code>
                 </span>
               </div>
@@ -120,7 +133,11 @@ export default function PaymentSettingsPage () {
                 background: settings.authorizenet ? '#111' : '#e0e0e0',
                 color: settings.authorizenet ? '#fff' : '#555'
               }}
-              title={settings.authorizenet ? 'Disable Authorize.Net' : 'Enable Authorize.Net'}
+              title={
+                settings.authorizenet
+                  ? 'Disable Authorize.Net'
+                  : 'Enable Authorize.Net'
+              }
             >
               {settings.authorizenet ? 'Active' : 'Inactive'}
             </button>
@@ -129,7 +146,8 @@ export default function PaymentSettingsPage () {
 
         {settings.stripe && settings.authorizenet && (
           <div style={styles.bothNote}>
-            Both gateways are active — customers will see a tab to choose at checkout.
+            Both gateways are active — customers will see a tab to choose at
+            checkout.
           </div>
         )}
 
@@ -156,21 +174,35 @@ export default function PaymentSettingsPage () {
         <div style={styles.envSection}>
           <h3 style={styles.envTitle}>Credential Setup</h3>
           <p style={styles.envBody}>
-            API keys are stored in <code>server/.env</code> — not in the database.
-            Set the variables below, then restart the server.
+            API keys are stored in <code>server/.env</code> — not in the
+            database. Set the variables below, then restart the server.
           </p>
           <table style={styles.envTable}>
             <tbody>
               {[
-                ['STRIPE_SECRET_KEY', 'Stripe secret key (starts with sk_ or rk_)'],
-                ['STRIPE_WEBHOOK_SECRET', 'Stripe webhook signing secret (starts with whsec_)'],
+                [
+                  'STRIPE_SECRET_KEY',
+                  'Stripe secret key (starts with sk_ or rk_)'
+                ],
+                [
+                  'STRIPE_WEBHOOK_SECRET',
+                  'Stripe webhook signing secret (starts with whsec_)'
+                ],
                 ['AUTHORIZENET_API_LOGIN_ID', 'Authorize.Net API Login ID'],
-                ['AUTHORIZENET_TRANSACTION_KEY', 'Authorize.Net Transaction Key'],
+                [
+                  'AUTHORIZENET_TRANSACTION_KEY',
+                  'Authorize.Net Transaction Key'
+                ],
                 ['AUTHORIZENET_CLIENT_KEY', 'Authorize.Net Public Client Key'],
-                ['AUTHORIZENET_TEST_MODE', '"true" for sandbox, "false" for production']
+                [
+                  'AUTHORIZENET_TEST_MODE',
+                  '"true" for sandbox, "false" for production'
+                ]
               ].map(([key, desc]) => (
                 <tr key={key}>
-                  <td style={styles.envKey}><code>{key}</code></td>
+                  <td style={styles.envKey}>
+                    <code>{key}</code>
+                  </td>
                   <td style={styles.envVal}>{desc}</td>
                 </tr>
               ))}
