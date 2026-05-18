@@ -21,24 +21,24 @@ const navMenu = [
       },
       { label: 'Trousers', href: '/Products/category/Trousers' }
     ]
-  },
-  {
-    label: 'Bags and small leather',
-    dropdown: [
-      {
-        label: 'Bags & Small Leather Goods',
-        href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
-      }
-    ]
-  },
-  {
-    label: 'Shoes',
-    dropdown: [{ label: 'Shoes', href: '/Products/category/Shoes' }]
-  },
-  {
-    label: 'Accessories',
-    dropdown: [{ label: 'Accessories', href: '/Products/category/Accessories' }]
   }
+  // {
+  //   label: 'Bags and small leather',
+  //   dropdown: [
+  //     {
+  //       label: 'Bags & Small Leather Goods',
+  //       href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
+  //     }
+  //   ]
+  // },
+  // {
+  //   label: 'Shoes',
+  //   dropdown: [{ label: 'Shoes', href: '/Products/category/Shoes' }]
+  // },
+  // {
+  //   label: 'Accessories',
+  //   dropdown: [{ label: 'Accessories', href: '/Products/category/Accessories' }]
+  // }
 ]
 
 const HandbagIcon = ({ size = 19, strokeWidth = 1 }) => (

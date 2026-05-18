@@ -41,13 +41,13 @@ export default function DropDown ({ onClose }) {
             },
             { label: 'Trousers', href: '/Products/category/Trousers' }
           ]
-        },
-        {
-          label: 'Bags & Small Leather Goods',
-          href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
-        },
-        { label: 'Shoes', href: '/Products/category/Shoes' },
-        { label: 'Accessories', href: '/Products/category/Accessories' }
+        }
+        // {
+        //   label: 'Bags & Small Leather Goods',
+        //   href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
+        // },
+        // { label: 'Shoes', href: '/Products/category/Shoes' },
+        // { label: 'Accessories', href: '/Products/category/Accessories' }
       ]
     }
   ]
