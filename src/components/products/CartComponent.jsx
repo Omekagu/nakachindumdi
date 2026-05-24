@@ -586,37 +586,49 @@ export default function CartComponent ({ onClose }) {
   )
   const isEmpty = items.length === 0
 
+  const buildPayloadItems = () =>
+    items.map(item => ({
+      productId:
+        typeof item.productId === 'object' ? item.productId._id : item.productId,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image,
+      brand: item.brand,
+      size: item.size,
+      color: item.color,
+      measurementId: item.measurementId
+    }))
+
+  const createStripeIntent = async (uid, isGuestCheckout) => {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
+      { items: buildPayloadItems(), userId: uid, isGuestCheckout }
+    )
+    setClientSecret(res.data.clientSecret)
+  }
+
   const initiateCheckout = async (uid, tok, isGuestCheckout) => {
     try {
-      // Fetch active gateways
       const settingsRes = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/settings`
       )
       const ps = settingsRes.data
       setPaymentSettings(ps)
 
-      const defaultGateway = ps.stripe ? 'stripe' : 'authorizenet'
+      // Default to Stripe only if it's the sole active gateway, otherwise default to AuthNet
+      // This avoids creating an unused PaymentIntent when the user will pay via AuthNet
+      const defaultGateway =
+        ps.stripe && !ps.authorizenet
+          ? 'stripe'
+          : ps.authorizenet
+          ? 'authorizenet'
+          : 'stripe'
       setSelectedGateway(defaultGateway)
 
-      if (ps.stripe) {
-        const payloadItems = items.map(item => ({
-          productId:
-            typeof item.productId === 'object' ? item.productId._id : item.productId,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image,
-          brand: item.brand,
-          size: item.size,
-          color: item.color,
-          measurementId: item.measurementId
-        }))
-
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
-          { items: payloadItems, userId: uid, isGuestCheckout }
-        )
-        setClientSecret(res.data.clientSecret)
+      // Only create a Stripe PaymentIntent if Stripe is the default (no AuthNet available)
+      if (defaultGateway === 'stripe') {
+        await createStripeIntent(uid, isGuestCheckout)
       }
 
       setShowCheckout(true)
@@ -633,26 +645,10 @@ export default function CartComponent ({ onClose }) {
 
   const handleGatewaySwitch = async gateway => {
     setSelectedGateway(gateway)
-    // Ensure Stripe payment intent is ready when switching to Stripe
+    // Create Stripe PaymentIntent lazily only when user actually switches to Stripe
     if (gateway === 'stripe' && !clientSecret && paymentSettings?.stripe) {
       try {
-        const payloadItems = items.map(item => ({
-          productId:
-            typeof item.productId === 'object' ? item.productId._id : item.productId,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image,
-          brand: item.brand,
-          size: item.size,
-          color: item.color,
-          measurementId: item.measurementId
-        }))
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/create-payment-intent`,
-          { items: payloadItems, userId, isGuestCheckout: isGuest }
-        )
-        setClientSecret(res.data.clientSecret)
+        await createStripeIntent(userId, isGuest)
       } catch (err) {
         console.error('Failed to create payment intent:', err)
       }
@@ -676,14 +672,17 @@ export default function CartComponent ({ onClose }) {
     setOrderSuccess({
       isOpen: true,
       orderId:
-        orderData.orderId || orderData._id || paymentIntent.id.substring(0, 20),
+        orderData.order?._id ||
+        orderData.transactionId ||
+        transactionData.id ||
+        'ORDER',
       orderData: {
         items: items,
         subtotal: subtotalAmount,
         shippingCost: shippingCost,
         tax: taxAmount,
         total: totalAmount,
-        shippingAddress: orderData.shippingAddress || {}
+        shippingAddress: orderData.order?.shippingAddress || orderData.shippingAddress || {}
       }
     })
 
