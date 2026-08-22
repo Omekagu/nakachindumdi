@@ -19,16 +19,16 @@ export default function ContentPage ({
           <section className='content-body'>
             <div className='content-lead'>
               {content && content[0] && (
-                <p className='lead-text'>{content[0]}</p>
+                <div className='lead-text'>{content[0]}</div>
               )}
             </div>
 
             <div className='content-paragraphs'>
               {content &&
                 content.slice(1).map((p, i) => (
-                  <p key={i} className='content-paragraph'>
+                  <div key={i} className='content-paragraph'>
                     {p}
-                  </p>
+                  </div>
                 ))}
             </div>
           </section>

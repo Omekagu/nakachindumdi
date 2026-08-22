@@ -23,28 +23,30 @@ const MEASUREMENT_GUIDES = {
     { name: 'Chest', description: 'Full chest circumference' },
     { name: 'Slope (Left Shoulder)', description: 'Left shoulder slope' },
     { name: 'Slope (Right Shoulder)', description: 'Right shoulder slope' },
-    { name: 'Strap', description: 'Strap if applicable' },
+    { name: 'Strap', description: 'Strap measurement' },
     { name: 'Depth of Scye', description: 'Depth from shoulder to scye' },
-    { name: 'Height', description: 'Person height' },
+    { name: 'Height', description: 'Full height' },
     { name: 'Trouser Length', description: 'Waist to ankle' },
     { name: 'Knee Length', description: 'Waist to knee' },
-    { name: 'Fixed Thigh', description: 'Thigh measurement' },
+    { name: 'Fixed Thigh', description: 'Thigh circumference' },
     { name: 'Fixed Knee', description: 'Knee circumference' },
     { name: 'Leg Opening', description: 'Hem opening' },
-    { name: 'Crotch', description: 'Front to back crotch length' }
+    { name: 'Crotch', description: 'Front to back crotch' }
   ],
   Trousers: [
-    { name: 'Trouser Length', description: 'Trouser Length' },
+    { name: 'Trouser Length', description: 'Waist to ankle' },
     { name: 'Hip', description: 'Around hip' },
     { name: 'Thigh', description: 'Around thigh' },
     { name: 'Ankle', description: 'Around ankle' },
     { name: 'Knee', description: 'Around knee' },
     { name: 'Calf', description: 'Around calf' },
-    { name: 'Crotch', description: 'Around crotch' },
-    { name: 'Inseam', description: 'Around inseam' },
+    { name: 'Crotch', description: 'Front to back crotch' },
+    { name: 'Inseam', description: 'Inner leg length' },
     { name: 'Waist', description: 'Around waist' }
   ]
 }
+
+const CHUNK_SIZE = 7
 
 export default function MeasurementForm ({
   productId = '',
@@ -53,9 +55,7 @@ export default function MeasurementForm ({
 }) {
   const router = useRouter()
   const { showNotification } = useNotification()
-  const [triedSubmit, setTriedSubmit] = useState(false)
 
-  // choose a sensible default type (fall back to the first guide if initialType isn't valid)
   const defaultType =
     initialType && MEASUREMENT_GUIDES[initialType]
       ? initialType
@@ -64,41 +64,71 @@ export default function MeasurementForm ({
   const [unit, setUnit] = useState('cm')
   const [activeType, setActiveType] = useState(defaultType)
   const [values, setValues] = useState({})
-  const [step, setStep] = useState(1) // 1 = form, 2 = review
+  const [step, setStep] = useState(1)   // 1 = form, 2 = review
+  const [chunk, setChunk] = useState(0)
   const [saving, setSaving] = useState(false)
+  const [activeTab, setActiveTab] = useState('measurements')
 
   const fields = MEASUREMENT_GUIDES[activeType] || []
-  const checkLogin = () => {
-    const userId = localStorage.getItem('userId')
-    if (!userId) {
-      showNotification('⚠️ Please log in to continue', 'warning')
-      router.push('/auth/login')
-      return false
-    }
-    return true
+
+  const chunks = []
+  for (let i = 0; i < fields.length; i += CHUNK_SIZE) {
+    chunks.push(fields.slice(i, i + CHUNK_SIZE))
   }
+  const totalChunks = chunks.length
+  const currentFields = chunks[chunk] || []
 
   useEffect(() => {
-    // initialize fields if empty (keep existing values)
     setValues(prev => {
       const base = {}
-      fields.forEach(f => {
-        base[f.name] = prev[f.name] ?? ''
-      })
+      fields.forEach(f => { base[f.name] = prev[f.name] ?? '' })
       return { ...base, ...prev }
     })
-    // reset step to form when type changes
     setStep(1)
+    setChunk(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeType])
 
-  // sanitize numeric inputs
   function handleChange (name, raw) {
     const cleaned = String(raw).replace(/[^\d.]/g, '')
     setValues(prev => ({ ...prev, [name]: cleaned }))
   }
 
-  // helper: persist measurement to localStorage and return saved object (with id)
+  function isChunkFilled () {
+    return currentFields.every(f => {
+      const v = values[f.name]
+      return v !== undefined && v !== null && String(v).trim() !== ''
+    })
+  }
+
+  function areAllFieldsFilled () {
+    return fields.every(f => {
+      const v = values[f.name]
+      return v !== undefined && v !== null && String(v).trim() !== ''
+    })
+  }
+
+  function handleContinue () {
+    if (!isChunkFilled()) {
+      showNotification('Please fill in all measurements to continue.', 'warning')
+      return
+    }
+    if (chunk < totalChunks - 1) {
+      setChunk(c => c + 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      setStep(2)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  function handleErase () {
+    const reset = {}
+    fields.forEach(f => { reset[f.name] = '' })
+    setValues(reset)
+    setChunk(0)
+  }
+
   function persistLocally (payload) {
     try {
       const existing = JSON.parse(
@@ -112,31 +142,17 @@ export default function MeasurementForm ({
         localStorage.setItem('customMeasurements', JSON.stringify(existing))
       }
       return saved
-    } catch (err) {
-      console.error('Failed to persist measurement locally', err)
+    } catch {
       return { id: Date.now().toString(), ...payload }
     }
   }
 
-  // simple check: ensure at least one field has a value before saving
-  function hasAnyValue () {
-    return fields.some(f => {
-      const v = values[f.name]
-      return v !== undefined && v !== null && String(v).trim() !== ''
-    })
-  }
-
   async function saveMeasurement () {
-    setSaving(true)
-
     if (!areAllFieldsFilled()) {
-      showNotification(
-        'Please fill in all measurements before saving.',
-        'warning'
-      )
-      setSaving(false)
+      showNotification('Please fill in all measurements before saving.', 'warning')
       return
     }
+    setSaving(true)
 
     const userId =
       typeof window !== 'undefined' ? localStorage.getItem('userId') : null
@@ -146,63 +162,40 @@ export default function MeasurementForm ({
       unit,
       values,
       productId: productId || null,
-      userId: userId,
+      userId,
       createdAt: new Date().toISOString()
     }
 
-    // ALWAYS save to localStorage first (for both guests and logged-in users)
     let savedMeasurement
     try {
       savedMeasurement = persistLocally(payload)
-      showNotification('✅ Measurement saved!', 'success')
-    } catch (err) {
-      console.error('Failed to save measurement to localStorage', err)
-      showNotification(
-        'Unable to save measurements. Please try again.',
-        'error'
-      )
+    } catch {
+      showNotification('Unable to save. Please try again.', 'error')
       setSaving(false)
       return
     }
 
-    // If user is logged in, ALSO save to backend as backup
     if (userId && process.env.NEXT_PUBLIC_BACKEND_URL) {
       try {
         const token = localStorage.getItem('token')
-
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/measurements`,
           payload,
-          {
-            headers: token ? { Authorization: `Bearer ${token}` } : {}
-          }
+          { headers: token ? { Authorization: `Bearer ${token}` } : {} }
         )
-
-        // Update the saved measurement with backend ID if available
         if (res?.data?._id) {
           savedMeasurement = { ...savedMeasurement, _id: res.data._id }
         }
-
-        console.log('✅ Measurement also synced to backend')
-      } catch (err) {
-        console.warn(
-          'Backend sync failed, but measurement is saved locally',
-          err
-        )
-        // Don't show error - localStorage save already succeeded
-      }
+      } catch { /* local save succeeded */ }
     }
 
-    // Call onSaved callback if provided
     if (onSaved) onSaved(savedMeasurement)
 
-    // Redirect back to product page with measurementId param
     if (productId) {
       const idToUse = savedMeasurement._id || savedMeasurement.id
-      const url = `/Products/id/${productId}?measurementId=${encodeURIComponent(
-        idToUse
-      )}&fromMeasurement=1`
-      router.replace(url)
+      router.replace(
+        `/Products/id/${productId}?measurementId=${encodeURIComponent(idToUse)}&fromMeasurement=1`
+      )
     } else {
       router.back()
     }
@@ -210,161 +203,162 @@ export default function MeasurementForm ({
     setSaving(false)
   }
 
-  // check that every field has a value
-  function areAllFieldsFilled () {
-    return fields.every(f => {
-      const v = values[f.name]
-      return v !== undefined && v !== null && String(v).trim() !== ''
-    })
-  }
-
   return (
     <AnimatePresence>
       <motion.div
-        className='mf-wrap'
+        className='mf-page'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <div className='mf-container'>
-          <header className='mf-header'>
-            <div className='mf-left'>
-              {/* <h1>{activeType} Measurements</h1> */}
-              <p className='mf-sub'>ENTER YOUR MEASUREMENTS</p>
-              <p className='mf-text'>
-                To ensure a flawless silhouette and fit, we require accurate
-                body measurements, which serve as the foundation of your custom
-                pattern. A $250 pattern-making fee applies for drafting a design
-                exclusively tailored to your proportions. By submitting your
-                measurements, you acknowledge that you have read and understood
-                our Custom Sizing & Tailoring Terms and Conditions.
-              </p>
+        {/* ── TOP BAR ── */}
+        <div className='mf-topbar'>
+          <div className='mf-topbar-spacer' />
+          <button
+            className='mf-close'
+            onClick={() => router.back()}
+            aria-label='Close'
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* ── TABS ── */}
+        <div className='mf-tabs'>
+          <button
+            className={`mf-tab ${activeTab === 'measurements' ? 'active' : ''}`}
+            onClick={() => setActiveTab('measurements')}
+          >
+            Custom measurements
+          </button>
+          <button
+            className={`mf-tab ${activeTab === 'guide' ? 'active' : ''}`}
+            onClick={() => setActiveTab('guide')}
+          >
+            Size guide
+          </button>
+        </div>
+        <div className='mf-tab-divider' />
+
+        {activeTab === 'guide' ? (
+          <div className='mf-guide-placeholder'>
+            <p>Size guide coming soon.</p>
+          </div>
+        ) : (
+          <div className='mf-body'>
+
+            {/* ── STEP & HEADING ── */}
+            <div className='mf-step-label'>
+              {step === 1 ? `${chunk + 1} – ${totalChunks}` : 'Review'}
             </div>
 
-            <div className='mf-right'>
-              <div className='mf-units' role='tablist' aria-label='Units'>
+            <h1 className='mf-heading'>
+              {step === 1 ? 'Enter your measurements' : 'Review your measurements'}
+            </h1>
+
+            <p className='mf-desc'>
+              {step === 1
+                ? 'Accurate body measurements ensure a flawless silhouette and fit.'
+                : 'Confirm your measurements before we proceed with your custom pattern.'}
+            </p>
+
+            {/* ── UNIT TOGGLE (step 1 only) ── */}
+            {step === 1 && (
+              <div className='mf-unit-toggle'>
                 <button
-                  className={`btn-unit ${unit === 'cm' ? 'on' : ''}`}
+                  className={`mf-unit ${unit === 'cm' ? 'active' : ''}`}
                   onClick={() => setUnit('cm')}
                   type='button'
                 >
-                  CM
+                  cm
                 </button>
                 <button
-                  className={`btn-unit ${unit === 'inches' ? 'on' : ''}`}
+                  className={`mf-unit ${unit === 'inches' ? 'active' : ''}`}
                   onClick={() => setUnit('inches')}
                   type='button'
                 >
-                  INCHES
+                  in
                 </button>
               </div>
-            </div>
-          </header>
-
-          {!initialType && (
-            <div className='mf-type-row'>
-              {Object.keys(MEASUREMENT_GUIDES).map(t => (
-                <button
-                  key={t}
-                  className={`type-btn ${t === activeType ? 'active' : ''}`}
-                  onClick={() => setActiveType(t)}
-                  type='button'
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <main className='mf-main'>
-            {step === 1 && (
-              <form
-                className='mf-form'
-                onSubmit={e => {
-                  e.preventDefault()
-                  setTriedSubmit(true)
-
-                  if (!areAllFieldsFilled()) {
-                    showNotification(
-                      'Please fill in all measurements before reviewing.',
-                      'warning'
-                    )
-                    return
-                  }
-
-                  setStep(2)
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-              >
-                <div className='mf-grid'>
-                  {fields.map(f => (
-                    <label key={f.name} className='mf-field'>
-                      <span className='mf-label'>{f.name}</span>
-                      <input
-                        className='mf-input'
-                        inputMode='decimal'
-                        value={values[f.name] ?? ''}
-                        placeholder=' '
-                        onChange={e => handleChange(f.name, e.target.value)}
-                        aria-label={f.name}
-                      />
-                      <span className='mf-underline' />
-                    </label>
-                  ))}
-                </div>
-
-                <div className='mf-actions'>
-                  <button type='submit' className='btn primary'>
-                    Review To Proceed
-                  </button>
-                </div>
-                {triedSubmit && !areAllFieldsFilled() && (
-                  <p className='mf-validation-msg'>
-                    Please complete all required measurements to proceed.
-                  </p>
-                )}
-              </form>
             )}
 
-            {step === 2 && (
-              <section className='mf-review'>
-                <h2>Review Measurements</h2>
-
-                <div className='mf-review-list'>
-                  {fields.map(f => (
-                    <div key={f.name} className='mf-review-row'>
-                      <div className='mf-r-label'>{f.name}</div>
-                      <div className='mf-r-value'>
-                        {values[f.name] || '—'}
-                        {values[f.name] ? ` ${unit}` : ''}
+            {/* ── FORM FIELDS ── */}
+            {step === 1 && (
+              <>
+                <div className='mf-fields'>
+                  {currentFields.map((f, i) => (
+                    <div key={f.name} className='mf-box'>
+                      <span className='mf-box-label'>{f.name}</span>
+                      <div className='mf-box-right'>
+                        <input
+                          className='mf-box-input'
+                          inputMode='decimal'
+                          value={values[f.name] ?? ''}
+                          placeholder='—'
+                          onChange={e => handleChange(f.name, e.target.value)}
+                          aria-label={f.name}
+                        />
+                        <span className='mf-box-unit'>{unit}</span>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className='mf-actions'>
-                  <button
-                    type='button'
-                    className='btn primary'
-                    onClick={() => setStep(1)}
-                  >
-                    Edit
+                <button className='mf-btn-continue' onClick={handleContinue}>
+                  CONTINUE
+                </button>
+
+                <div className='mf-bottom-links'>
+                  {chunk > 0 && (
+                    <button
+                      className='mf-link-btn'
+                      onClick={() => { setChunk(c => c - 1); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                    >
+                      Back
+                    </button>
+                  )}
+                  <button className='mf-link-btn' onClick={handleErase}>
+                    Erase data
                   </button>
                 </div>
-                <div className='mf-actions'>
-                  <button
-                    type='button'
-                    className='btn primary'
-                    onClick={saveMeasurement}
-                    disabled={saving}
-                  >
-                    {saving ? 'Saving…' : 'Proceed'}
-                  </button>
-                </div>
-              </section>
+              </>
             )}
-          </main>
-        </div>
+
+            {/* ── REVIEW ── */}
+            {step === 2 && (
+              <>
+                <div className='mf-review-list'>
+                  {fields.map(f => (
+                    <div key={f.name} className='mf-review-row'>
+                      <span className='mf-r-label'>{f.name}</span>
+                      <span className='mf-r-val'>
+                        {values[f.name] ? `${values[f.name]} ${unit}` : '—'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className='mf-btn-continue'
+                  onClick={saveMeasurement}
+                  disabled={saving}
+                >
+                  {saving ? 'Saving…' : 'CONFIRM & PROCEED'}
+                </button>
+
+                <div className='mf-bottom-links'>
+                  <button
+                    className='mf-link-btn'
+                    onClick={() => { setStep(1); setChunk(totalChunks - 1) }}
+                  >
+                    Edit measurements
+                  </button>
+                </div>
+              </>
+            )}
+
+          </div>
+        )}
       </motion.div>
     </AnimatePresence>
   )

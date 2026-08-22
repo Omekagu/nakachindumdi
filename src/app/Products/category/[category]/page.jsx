@@ -65,6 +65,7 @@ export default function CategoryPage () {
         quantity={product.quantity}
         title={product.name}
         price={`$${product.price}`}
+        colors={product.colors}
       />
     ))
   }

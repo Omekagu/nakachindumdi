@@ -234,7 +234,7 @@ export default function Footer () {
 
         <div className='footer-bottom'>
           <footer>
-            <p style={{ fontSize: '0.6rem' }}>
+            <p>
               ©{new Date().getFullYear()} NAKACHI NDUMDI. All rights reserved.
             </p>
           </footer>

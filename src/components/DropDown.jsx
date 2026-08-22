@@ -8,7 +8,6 @@ export default function DropDown ({ onClose }) {
   const [token, setToken] = useState(null)
   const [mounted, setMounted] = useState(false)
 
-  // ✅ Safe hydration for localStorage
   useEffect(() => {
     setMounted(true)
     if (typeof window !== 'undefined') {
@@ -27,7 +26,7 @@ export default function DropDown ({ onClose }) {
       title: '',
       items: [
         {
-          label: 'Ready To Wear',
+          label: 'Clothing',
           href: '#',
           children: [
             { label: 'Shirts', href: '/Products/category/Shirts' },
@@ -41,18 +40,17 @@ export default function DropDown ({ onClose }) {
             },
             { label: 'Trousers', href: '/Products/category/Trousers' }
           ]
-        }
-        // {
-        //   label: 'Bags & Small Leather Goods',
-        //   href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
-        // },
-        // { label: 'Shoes', href: '/Products/category/Shoes' },
-        // { label: 'Accessories', href: '/Products/category/Accessories' }
+        },
+        {
+          label: 'Bags',
+          href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
+        },
+        { label: 'Shoes', href: '/Products/category/Shoes' },
+        { label: 'Accessories', href: '/Products/category/Accessories' }
       ]
     }
   ]
 
-  // ⛔ Prevent hydration mismatch
   if (!mounted) return null
 
   return (
@@ -63,7 +61,6 @@ export default function DropDown ({ onClose }) {
             <div className='overlay-section' key={idx}>
               <div className='section-title'>{section.title}</div>
 
-              {/* If submenu is active, show only it */}
               {activeMenu ? (
                 <div className='submenu-wrapper'>
                   <span
@@ -102,6 +99,12 @@ export default function DropDown ({ onClose }) {
       </div>
 
       <div className='overlay-footer'>
+        <div onClick={handleClose}>
+          <Link href='/archive'>Archive</Link>
+        </div>
+        <div onClick={handleClose}>
+          <Link href='/readings'>Readings</Link>
+        </div>
         <div onClick={handleClose}>
           <Link href={token ? '/user/user-profile' : '/auth/login'}>
             {token ? 'Profile' : 'Account'}

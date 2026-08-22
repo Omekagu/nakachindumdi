@@ -7,12 +7,12 @@ export default function ProductCard ({
   title,
   price,
   id,
-  quantity
+  quantity,
+  colors
 }) {
   return (
     <div className='productCard'>
       <div className='imageWrapper'>
-        {/* RESERVE OVERLAY */}
         {quantity === 0 && <div className='reserve-overlay'>Reserved</div>}
 
         <Link href={`/Products/id/${id}`} className='card'>
@@ -20,10 +20,23 @@ export default function ProductCard ({
         </Link>
       </div>
 
-      <div className='info'>
-        <p>{title}</p>
-        <span>{price}</span>
-      </div>
+      <Link href={`/Products/id/${id}`} className='info'>
+        <p className='product-title'>{title}</p>
+        <span className='product-price'>{price}</span>
+
+        {colors && colors.length > 0 && (
+          <div className='product-colors'>
+            {colors.map((color, i) => (
+              <span
+                key={i}
+                className='color-swatch'
+                style={{ backgroundColor: color }}
+                title={color}
+              />
+            ))}
+          </div>
+        )}
+      </Link>
     </div>
   )
 }

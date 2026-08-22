@@ -102,7 +102,7 @@ export default function TermsPage () {
       <ContentPage
         title='Terms & Conditions'
         content={termsContent.map((section, index) => (
-          <p key={index} dangerouslySetInnerHTML={{ __html: section }} />
+          <div key={index} dangerouslySetInnerHTML={{ __html: section }} />
         ))}
         footer={`©${new Date().getFullYear()} NAKACHI NDUMDI. All rights reserved.`}
       />
