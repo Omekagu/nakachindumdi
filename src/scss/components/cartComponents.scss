@@ -49,6 +49,7 @@
     position: relative;
     animation: slideIn 0.3s ease-out;
     overflow-y: auto;
+    padding-top: 56px;
 
     @media (max-width: 768px) {
       width: 100%;

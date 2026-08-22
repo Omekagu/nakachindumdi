@@ -3,7 +3,23 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import DropDown from './DropDown'
 import CartComponent from './products/CartComponent'
-import { Search, X, Menu, ShoppingBag } from 'lucide-react'
+import { Search, X, Menu } from 'lucide-react'
+
+const BagIcon = () => (
+  <svg
+    width='19'
+    height='19'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1'
+    strokeLinecap='square'
+    strokeLinejoin='miter'
+  >
+    <rect x='5' y='8' width='14' height='13' />
+    <path d='M9 8V6a3 3 0 0 1 6 0v2' />
+  </svg>
+)
 import SearchComponent from './SearchComponent'
 
 const navMenu = [
@@ -187,15 +203,9 @@ export default function Header () {
                 className='cart-icon-wrap'
                 onClick={() => togglePanel('cart')}
               >
-                {activePanel === 'cart' ? (
-                  <X strokeWidth={1} size={19} />
-                ) : (
-                  <>
-                    <ShoppingBag strokeWidth={1} size={19} />
-                    {cartCount > 0 && (
-                      <span className='cart-badge'>{cartCount}</span>
-                    )}
-                  </>
+                <BagIcon />
+                {cartCount > 0 && (
+                  <span className='cart-badge'>{cartCount}</span>
                 )}
               </div>
             </div>
