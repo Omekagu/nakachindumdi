@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const ComingSoon = () => {
   const [email, setEmail] = useState('')
@@ -9,6 +10,8 @@ const ComingSoon = () => {
     minutes: 0,
     seconds: 0
   })
+
+  const router = useRouter()
 
   useEffect(() => {
     const launchDate = new Date()
@@ -34,6 +37,7 @@ const ComingSoon = () => {
   const handleSubmit = e => {
     e.preventDefault()
     console.log('Email submitted:', email)
+    router.push('/home') // Redirect to thank you page
     setEmail('')
     alert('Thank you! We will notify you when we launch.')
   }

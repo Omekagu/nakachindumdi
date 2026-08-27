@@ -10,6 +10,7 @@ $radius: 10px;
   margin: 2rem;
   max-width: 900px;
   align-content: center;
+  min-height: calc(100vh - 56px - 4rem);
 }
 
 .content-container {

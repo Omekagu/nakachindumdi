@@ -9,30 +9,13 @@
   z-index: 10009;
   max-width: 650px;
   width: 90%;
-  // border: 1px solid #000;
+  border: 1px solid #000;
   animation: fadeIn 0.4s ease-in-out;
-
-  .cookies-close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #000;
-    padding: 0;
-    line-height: 1;
-
-    &:hover {
-      opacity: 0.6;
-    }
-  }
 
   p {
     font-size: 0.8rem;
     line-height: 1.7;
-    margin-bottom: 0;
+    margin-bottom: 0.8rem;
     color: #111;
 
     a {
@@ -46,52 +29,25 @@
     }
   }
 
-  .cookies-dnss {
-    margin: 1.5rem 0;
-    text-align: center;
-
-    a {
-      color: #000;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: underline;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
-
   .cookies-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    margin-top: 0;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
   }
 
-  button {
-    flex: 1;
+  .accept-btn,
+  .decline-btn {
+    width: 100%;
     border: none;
     padding: 1rem 1.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
     font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.3px;
-  }
-
-  .accept-btn {
     background: #000;
     color: #fff;
-
-    &:hover {
-      background: #333;
-    }
-  }
-
-  .decline-btn {
-    background: #000;
-    color: #fff;
+    transition: background 0.2s;
 
     &:hover {
       background: #333;

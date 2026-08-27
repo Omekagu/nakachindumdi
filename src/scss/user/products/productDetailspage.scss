@@ -131,11 +131,8 @@ a {
   font-style: normal;
   color: inherit;
   font-weight: 500;
+  border-top: 1px solid #e5e5e5;
 
-  // .size {
-  //   border: 1px solid #333;
-  //   padding: -1rem 0 -1rem 0.5rem;
-  // }
   .accordion-title {
     display: flex;
     justify-content: space-between;
@@ -143,7 +140,15 @@ a {
     padding: 1rem 0;
     font-size: 0.7rem;
     margin-top: -1rem;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
     cursor: pointer;
+
+    &.size {
+      border: 1px solid #111;
+      padding: 0.75rem 1rem;
+      margin-top: 0;
+    }
   }
   .accordion-content {
     padding-bottom: 1rem;
@@ -173,6 +178,12 @@ a {
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
+  color: #000;
+  font-size: 0.7rem;
+
+  &:hover {
+    color: #000;
+  }
 }
 /* SIZES */
 .sizes {
@@ -181,7 +192,7 @@ a {
   flex-wrap: wrap;
 
   span {
-    border: 1px solid #555;
+    border: 1px solid #000;
     padding: 0.4rem 0.8rem;
     text-transform: capitalize;
     cursor: pointer;

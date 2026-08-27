@@ -64,7 +64,7 @@ export default function MeasurementForm ({
   const [unit, setUnit] = useState('cm')
   const [activeType, setActiveType] = useState(defaultType)
   const [values, setValues] = useState({})
-  const [step, setStep] = useState(1)   // 1 = form, 2 = review
+  const [step, setStep] = useState(1) // 1 = form, 2 = review
   const [chunk, setChunk] = useState(0)
   const [saving, setSaving] = useState(false)
   const [activeTab, setActiveTab] = useState('measurements')
@@ -81,7 +81,9 @@ export default function MeasurementForm ({
   useEffect(() => {
     setValues(prev => {
       const base = {}
-      fields.forEach(f => { base[f.name] = prev[f.name] ?? '' })
+      fields.forEach(f => {
+        base[f.name] = prev[f.name] ?? ''
+      })
       return { ...base, ...prev }
     })
     setStep(1)
@@ -110,7 +112,10 @@ export default function MeasurementForm ({
 
   function handleContinue () {
     if (!isChunkFilled()) {
-      showNotification('Please fill in all measurements to continue.', 'warning')
+      showNotification(
+        'Please fill in all measurements to continue.',
+        'warning'
+      )
       return
     }
     if (chunk < totalChunks - 1) {
@@ -124,7 +129,9 @@ export default function MeasurementForm ({
 
   function handleErase () {
     const reset = {}
-    fields.forEach(f => { reset[f.name] = '' })
+    fields.forEach(f => {
+      reset[f.name] = ''
+    })
     setValues(reset)
     setChunk(0)
   }
@@ -149,7 +156,10 @@ export default function MeasurementForm ({
 
   async function saveMeasurement () {
     if (!areAllFieldsFilled()) {
-      showNotification('Please fill in all measurements before saving.', 'warning')
+      showNotification(
+        'Please fill in all measurements before saving.',
+        'warning'
+      )
       return
     }
     setSaving(true)
@@ -186,7 +196,9 @@ export default function MeasurementForm ({
         if (res?.data?._id) {
           savedMeasurement = { ...savedMeasurement, _id: res.data._id }
         }
-      } catch { /* local save succeeded */ }
+      } catch {
+        /* local save succeeded */
+      }
     }
 
     if (onSaved) onSaved(savedMeasurement)
@@ -194,7 +206,9 @@ export default function MeasurementForm ({
     if (productId) {
       const idToUse = savedMeasurement._id || savedMeasurement.id
       router.replace(
-        `/Products/id/${productId}?measurementId=${encodeURIComponent(idToUse)}&fromMeasurement=1`
+        `/Products/id/${productId}?measurementId=${encodeURIComponent(
+          idToUse
+        )}&fromMeasurement=1`
       )
     } else {
       router.back()
@@ -246,19 +260,15 @@ export default function MeasurementForm ({
           </div>
         ) : (
           <div className='mf-body'>
-
-            {/* ── STEP & HEADING ── */}
-            <div className='mf-step-label'>
-              {step === 1 ? `${chunk + 1} – ${totalChunks}` : 'Review'}
-            </div>
-
             <h1 className='mf-heading'>
-              {step === 1 ? 'Enter your measurements' : 'Review your measurements'}
+              {step === 1
+                ? 'Enter your measurements'
+                : 'Review your measurements'}
             </h1>
 
             <p className='mf-desc'>
               {step === 1
-                ? 'Accurate body measurements ensure a flawless silhouette and fit.'
+                ? 'To ensure a flawless silhouette and fit, we require accurate body measurements, which serve as the foundation of your custom pattern. A $250 pattern-making fee applies for drafting a design exclusively tailored to your proportions. By submitting your measurements, you acknowledge that you have read and understood our Custom Sizing & Tailoring Terms and Conditions.'
                 : 'Confirm your measurements before we proceed with your custom pattern.'}
             </p>
 
@@ -281,6 +291,10 @@ export default function MeasurementForm ({
                 </button>
               </div>
             )}
+            {/* ── STEP & HEADING ── */}
+            <div className='mf-step-label'>
+              {step === 1 ? `${chunk + 1} – ${totalChunks}` : 'Review'}
+            </div>
 
             {/* ── FORM FIELDS ── */}
             {step === 1 && (
@@ -312,7 +326,10 @@ export default function MeasurementForm ({
                   {chunk > 0 && (
                     <button
                       className='mf-link-btn'
-                      onClick={() => { setChunk(c => c - 1); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                      onClick={() => {
+                        setChunk(c => c - 1)
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                      }}
                     >
                       Back
                     </button>
@@ -349,14 +366,16 @@ export default function MeasurementForm ({
                 <div className='mf-bottom-links'>
                   <button
                     className='mf-link-btn'
-                    onClick={() => { setStep(1); setChunk(totalChunks - 1) }}
+                    onClick={() => {
+                      setStep(1)
+                      setChunk(totalChunks - 1)
+                    }}
                   >
                     Edit measurements
                   </button>
                 </div>
               </>
             )}
-
           </div>
         )}
       </motion.div>
