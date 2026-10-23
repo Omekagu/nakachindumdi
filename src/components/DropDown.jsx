@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useCallback, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function DropDown ({ onClose }) {
-  const [activeMenu, setActiveMenu] = useState(null)
   const [token, setToken] = useState(null)
   const [mounted, setMounted] = useState(false)
 
@@ -15,101 +14,39 @@ export default function DropDown ({ onClose }) {
     }
   }, [])
 
-  const handleClose = useCallback(() => {
-    if (typeof onClose === 'function') {
-      onClose()
-    }
-  }, [onClose])
-
-  const links = [
-    {
-      title: '',
-      items: [
-        {
-          label: 'Clothing',
-          href: '#',
-          children: [
-            { label: 'Shirts', href: '/Products/category/Shirts' },
-            {
-              label: 'Jackets & Blousons',
-              href: '/Products/category/Jackets%20%26%20Blousons'
-            },
-            {
-              label: 'Coats & Blazers',
-              href: '/Products/category/Coats%20%26%20Blazers'
-            },
-            { label: 'Trousers', href: '/Products/category/Trousers' }
-          ]
-        },
-        {
-          label: 'Bags',
-          href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
-        },
-        { label: 'Shoes', href: '/Products/category/Shoes' },
-        { label: 'Accessories', href: '/Products/category/Accessories' }
-      ]
-    }
-  ]
-
   if (!mounted) return null
 
   return (
     <div className='menu-overlay'>
-      <div className='overlay-content'>
-        <div className='overlay-sections'>
-          {links.map((section, idx) => (
-            <div className='overlay-section' key={idx}>
-              <div className='section-title'>{section.title}</div>
+      <div className='menu-columns'>
+        <div className='menu-col'>
+          <div className='menu-col-header'>Products</div>
+          <div className='menu-col-group'>
+            <Link href='/Products/category/Shirts' onClick={onClose}>Shirts</Link>
+            <Link href='/Products/category/Jackets%20%26%20Blousons' onClick={onClose}>Jackets & Blousons</Link>
+            <Link href='/Products/category/Coats%20%26%20Blazers' onClick={onClose}>Coats & Blazers</Link>
+            <Link href='/Products/category/Trousers' onClick={onClose}>Trousers</Link>
+          </div>
+          <div className='menu-col-group'>
+            <Link href='/Products/category/Bags%20%26%20Small%20Leather%20Goods' onClick={onClose}>Bags</Link>
+            <Link href='/Products/category/Shoes' onClick={onClose}>Shoes</Link>
+            <Link href='/Products/category/Accessories' onClick={onClose}>Accessories</Link>
+          </div>
+        </div>
 
-              {activeMenu ? (
-                <div className='submenu-wrapper'>
-                  <span
-                    className='back-btn'
-                    onClick={() => setActiveMenu(null)}
-                  >
-                    ← Back
-                  </span>
-                  {activeMenu.children.map((child, j) => (
-                    <Link key={j} href={child.href} onClick={handleClose}>
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                section.items.map((item, i) => (
-                  <div key={i} className='menu-item'>
-                    {item.children ? (
-                      <span
-                        className='menu-toggle'
-                        onClick={() => setActiveMenu(item)}
-                      >
-                        {item.label}
-                      </span>
-                    ) : (
-                      <Link href={item.href} onClick={handleClose}>
-                        {item.label}
-                      </Link>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
-          ))}
+        <div className='menu-col'>
+          <div className='menu-col-header'>Explore</div>
+          <div className='menu-col-group'>
+            <Link href='/archive' onClick={onClose}>Archive</Link>
+            <Link href='/readings' onClick={onClose}>Readings</Link>
+          </div>
         </div>
       </div>
 
-      <div className='overlay-footer'>
-        <div onClick={handleClose}>
-          <Link href='/archive'>Archive</Link>
-        </div>
-        <div onClick={handleClose}>
-          <Link href='/readings'>Readings</Link>
-        </div>
-        <div onClick={handleClose}>
-          <Link href={token ? '/user/user-profile' : '/auth/login'}>
-            {token ? 'Profile' : 'Account'}
-          </Link>
-        </div>
+      <div className='menu-account'>
+        <Link href={token ? '/user/user-profile' : '/auth/login'} onClick={onClose}>
+          {token ? 'Profile' : 'Account'}
+        </Link>
       </div>
     </div>
   )

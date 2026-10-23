@@ -8,12 +8,14 @@ export default function ProductCard ({
   price,
   id,
   quantity,
-  colors
+  colors,
+  tag
 }) {
   return (
     <div className='productCard'>
+      <div className='product-tag'>{tag || ' '}</div>
       <div className='imageWrapper'>
-        {quantity === 0 && <div className='reserve-overlay'>Reserved</div>}
+        {quantity === 0 && <div className='reserve-overlay'>Pre-Order</div>}
 
         <Link href={`/Products/id/${id}`} className='card'>
           <img src={img1} alt={title} className='img' />
@@ -21,7 +23,9 @@ export default function ProductCard ({
       </div>
 
       <Link href={`/Products/id/${id}`} className='info'>
-        <p className='product-title'>{title}</p>
+        <p className='product-title'>
+          {title?.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}
+        </p>
         <span className='product-price'>{price}</span>
 
         {colors && colors.length > 0 && (

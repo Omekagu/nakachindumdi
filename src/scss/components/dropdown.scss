@@ -4,206 +4,73 @@
   margin-top: 56px;
   z-index: 2000;
   background: #fff;
-  color: #111;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  min-height: 100vh;
-  width: 100vw;
-  overflow-y: auto;
-  animation: fadeIn 0.3s;
+  justify-content: space-between;
   padding: 2.5rem;
+  overflow-y: auto;
+  animation: menuFadeIn 0.25s ease;
 }
 
-@keyframes fadeIn {
+@keyframes menuFadeIn {
   from {
     opacity: 0;
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #111;
-  animation: fade 0.3s ease-in-out;
-}
-
-.site-name {
-  text-align: center;
-  letter-spacing: 0.1em;
-  padding-top: 24px;
-  padding-bottom: 16px;
-}
-
-.overlay-content {
-  width: 100%;
+.menu-columns {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  gap: 4rem;
   align-items: flex-start;
-  flex: 1;
 }
 
-.overlay-sections {
+.menu-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  text-transform: capitalize;
+  gap: 1.8rem;
 }
 
-.section-title {
-  color: #999;
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
-}
-
-.overlay-section a {
-  line-height: 1.8;
-  display: block;
+.menu-col-header {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #111;
-  margin: 0.05rem 0;
-  font-size: 1rem;
-  font-weight: 300;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  border-bottom: 1px solid #111;
+  padding-bottom: 0.5rem;
 }
 
-.overlay-section .menu-toggle {
-  line-height: 1.8;
-  display: block;
-  color: #111;
-  margin: 0.05rem 0;
-  font-size: 1rem;
-  font-weight: 300;
-}
-
-.overlay-footer {
+.menu-col-group {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 0.2rem;
-  width: 100%;
-  background: transparent;
-  border-top: none;
-  color: #111;
-  padding: 1.2rem 2.5rem;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-}
-
-.overlay-footer > div {
-  display: flex;
-  align-items: center;
-}
-
-.overlay-footer > div a {
-  color: #111;
-  text-align: right;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 300;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.menu-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 0;
-  // font-size: 0.1rem;
 
   a {
-    text-decoration: none;
-  }
-
-  .menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 300;
     color: #111;
-    padding: 0;
-
-    .nav-toggle {
-      display: none;
-      visibility: hidden;
-
-      @media (max-width: 900px) {
-        display: inline;
-      }
-    }
+    text-decoration: none;
+    line-height: 1.9;
 
     &:hover {
-      color: #555;
+      text-decoration: underline;
     }
   }
 }
 
-.submenu-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 0;
-  animation: slideIn 0.4s ease forwards;
-}
+.menu-account {
+  a {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #111;
+    text-decoration: none;
 
-.submenu-wrapper a {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: all 0.4s ease;
-  text-decoration: none;
-  font-size: 1.5rem !important;
-  color: #111;
-}
-
-.submenu-wrapper a:nth-child(2) {
-  transition-delay: 0.1s;
-}
-.submenu-wrapper a:nth-child(3) {
-  transition-delay: 0.2s;
-}
-.submenu-wrapper a:nth-child(4) {
-  transition-delay: 0.3s;
-}
-
-.submenu-wrapper a {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.back-btn {
-  margin-bottom: 1rem;
-  cursor: pointer;
-  font-size: 0.9rem !important;
-  color: #888 !important;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@media (max-width: 900px) {
-  .overlay-content {
-    margin-top: 0;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

@@ -2,6 +2,17 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  border-right: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.product-tag {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  padding: 0.6rem 1rem 0.3rem 1rem;
 }
 
 .card {
@@ -98,8 +109,8 @@
   font-style: normal;
   color: inherit;
   width: 100%;
-  padding: 0.6rem 0 1.5rem 0;
-  border-top: 1px solid #d8d8d8;
+  padding: 0.8rem 1rem 1.5rem 1rem;
+  border-top: 1px solid #e5e5e5;
 
   .product-title {
     font-weight: 400;
@@ -107,6 +118,10 @@
     color: #191919;
     margin: 0 0 0.2rem 0;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 
   .product-price {

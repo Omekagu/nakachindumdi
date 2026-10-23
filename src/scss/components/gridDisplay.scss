@@ -2,12 +2,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding-top: 10rem;
-  overflow: hidden;
   scroll-behavior: smooth;
+  border-left: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
-    //
   }
 
   @media (max-width: 1026px) {
@@ -19,6 +19,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding-top: 10rem;
-  overflow: hidden;
   scroll-behavior: smooth;
+  border-left: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }

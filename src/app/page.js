@@ -10,6 +10,7 @@ const ComingSoon = () => {
     minutes: 0,
     seconds: 0
   })
+  const [particles, setParticles] = useState([])
 
   const router = useRouter()
 
@@ -32,6 +33,16 @@ const ComingSoon = () => {
     }, 1000)
 
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    setParticles(
+      [...Array(20)].map(() => ({
+        left: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+        animationDuration: `${5 + Math.random() * 10}s`
+      }))
+    )
   }, [])
 
   const handleSubmit = e => {
@@ -122,16 +133,8 @@ const ComingSoon = () => {
       </div>
 
       <div className='coming-soon__particles'>
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className='particle'
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${5 + Math.random() * 10}s`
-            }}
-          ></div>
+        {particles.map((style, i) => (
+          <div key={i} className='particle' style={style}></div>
         ))}
       </div>
     </div>
