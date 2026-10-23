@@ -22,4 +22,8 @@
   scroll-behavior: smooth;
   border-left: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
