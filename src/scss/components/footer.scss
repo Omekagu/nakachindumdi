@@ -110,6 +110,20 @@
     color: #888;
     margin-top: 0.5rem;
 
+    .footer-logo {
+      margin-bottom: 0.5rem;
+
+      a {
+        font-family: 'Archivo Black', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #111;
+        text-decoration: none;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+    }
+
     p {
       margin: 0;
       font-size: 0.7rem;

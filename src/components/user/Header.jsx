@@ -14,7 +14,7 @@ export default function Header () {
         </div>
 
         {/* Center Logo */}
-        <div className='header-logo'>NAKACHI NDUMDI</div>
+        {/* <div className='header-logo'>NAKACHI NDUMDI</div> */}
       </div>
 
       {/* Sidebar */}

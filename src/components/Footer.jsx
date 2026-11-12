@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import FooterModal from './user/FooterModal'
+import Link from 'next/link'
 
 function FooterSection ({
   title,
@@ -233,11 +234,10 @@ export default function Footer () {
         </div>
 
         <div className='footer-bottom'>
-          <footer>
-            <p>
-              ©{new Date().getFullYear()} NAKACHI NDUMDI. All rights reserved.
-            </p>
-          </footer>
+          <div className='footer-logo'>
+            <Link href='/'>NAKACHI NDUMDI</Link>
+          </div>
+          <p>©{new Date().getFullYear()} NAKACHI NDUMDI. All rights reserved.</p>
         </div>
       </div>
 

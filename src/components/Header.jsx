@@ -57,7 +57,6 @@ const navMenu = [
   // }
 ]
 
-
 export default function Header () {
   const [activePanel, setActivePanel] = useState(null)
   const [dropdownOpen, setDropdownOpen] = useState(null)
@@ -127,7 +126,11 @@ export default function Header () {
   return (
     <>
       <header>
-        <nav className={`site-header${activePanel === 'menu' ? ' site-header--open' : ''}`}>
+        <nav
+          className={`site-header${
+            activePanel === 'menu' ? ' site-header--open' : ''
+          }`}
+        >
           {/* LEFT */}
           <div className='nav-left'>
             <div
@@ -163,11 +166,6 @@ export default function Header () {
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* CENTER LOGO — absolutely centered, never pushed by flex siblings */}
-          <div className='logo'>
-            <Link href='/'>NAKACHI NDUMDI</Link>
           </div>
 
           {/* RIGHT */}
