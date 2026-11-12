@@ -3,10 +3,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 56px;
+  height: 64px;
   padding: 0 1rem;
   z-index: 9999;
   background-color: transparent;
+
+  &.site-header--open {
+    background-color: #fff;
+  }
 
   display: flex;
   align-items: center; // vertically centers ALL direct children
@@ -87,12 +91,13 @@
       color: #000;
       white-space: nowrap;
       line-height: 1; // prevents extra vertical space from line-height
-      margin-top: 0.85rem;
+      margin-top: 1.4rem;
     }
 
     @media (max-width: 750px) {
       a {
         font-size: 15px;
+        margin-top: 1.2rem;
       }
     }
   }

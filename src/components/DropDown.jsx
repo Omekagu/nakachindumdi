@@ -38,6 +38,8 @@ export default function DropDown ({ onClose }) {
           <div className='menu-col-header'>Explore</div>
           <div className='menu-col-group'>
             <Link href='/archive' onClick={onClose}>Archive</Link>
+            <Link href='/projects' onClick={onClose}>Projects</Link>
+            <Link href='/playlists' onClick={onClose}>Playlists</Link>
             <Link href='/readings' onClick={onClose}>Readings</Link>
           </div>
         </div>

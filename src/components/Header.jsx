@@ -127,7 +127,7 @@ export default function Header () {
   return (
     <>
       <header>
-        <nav className='site-header'>
+        <nav className={`site-header${activePanel === 'menu' ? ' site-header--open' : ''}`}>
           {/* LEFT */}
           <div className='nav-left'>
             <div
