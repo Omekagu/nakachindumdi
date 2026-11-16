@@ -24,37 +24,26 @@ import SearchComponent from './SearchComponent'
 
 const navMenu = [
   {
-    label: 'Ready To Wear',
+    label: 'Products',
     dropdown: [
       { label: 'Shirts', href: '/Products/category/Shirts' },
-      {
-        label: 'Jackets & Blousons',
-        href: '/Products/category/Jackets%20%26%20Blousons'
-      },
-      {
-        label: 'Coats & Blazers',
-        href: '/Products/category/Coats%20%26%20Blazers'
-      },
-      { label: 'Trousers', href: '/Products/category/Trousers' }
+      { label: 'Jackets & Blousons', href: '/Products/category/Jackets%20%26%20Blousons' },
+      { label: 'Coats & Blazers', href: '/Products/category/Coats%20%26%20Blazers' },
+      { label: 'Trousers', href: '/Products/category/Trousers' },
+      { label: 'Bags', href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods' },
+      { label: 'Shoes', href: '/Products/category/Shoes' },
+      { label: 'Accessories', href: '/Products/category/Accessories' }
+    ]
+  },
+  {
+    label: 'Explore',
+    dropdown: [
+      { label: 'Archive', href: '/archive' },
+      { label: 'Projects', href: '/projects' },
+      { label: 'Playlists', href: '/playlists' },
+      { label: 'Readings', href: '/readings' }
     ]
   }
-  // {
-  //   label: 'Bags and small leather',
-  //   dropdown: [
-  //     {
-  //       label: 'Bags & Small Leather Goods',
-  //       href: '/Products/category/Bags%20%26%20Small%20Leather%20Goods'
-  //     }
-  //   ]
-  // },
-  // {
-  //   label: 'Shoes',
-  //   dropdown: [{ label: 'Shoes', href: '/Products/category/Shoes' }]
-  // },
-  // {
-  //   label: 'Accessories',
-  //   dropdown: [{ label: 'Accessories', href: '/Products/category/Accessories' }]
-  // }
 ]
 
 export default function Header () {

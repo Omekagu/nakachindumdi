@@ -25,7 +25,7 @@
 
 .menu-columns {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   align-items: flex-start;
   width: 100%;
 }
@@ -54,15 +54,23 @@
   flex-direction: column;
 
   a {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 400;
-    color: #111;
     text-decoration: none;
     line-height: 1.9;
+    white-space: nowrap;
 
     &:hover {
-      text-decoration: underline;
+      color: #111;
     }
+  }
+
+  .nav-link--active {
+    color: #111;
+  }
+
+  .nav-link--inactive {
+    color: #aaa;
   }
 }
 
