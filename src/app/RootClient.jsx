@@ -41,7 +41,7 @@ export default function RootClient ({ children }) {
       {!hideLayout && <Header />}
       {children}
       {!hideLayout && <Footer />}
-      <CookiesPopup />
+      {/* <CookiesPopup /> */}
     </NotificationProvider>
   )
 }
